@@ -174,6 +174,7 @@ nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.06); }
 }
 .hero h1 .highlight { color: var(--blue-primary); }
 .hero-nowrap { white-space: nowrap; }
+.hero h1 .comma { margin-left: -0.15em; }
 
 /* Hero word rotator */
 .hero-rotating-wrapper {
@@ -733,6 +734,11 @@ nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.06); }
   color: var(--gray-500);
   font-weight: 500;
 }
+.stat-france { background: linear-gradient(135deg, #f0f7ff 0%, #e6fff5 100%); border-color: rgba(0,123,255,0.15); }
+.stat-france-inner { display: flex; align-items: center; gap: 14px; justify-content: center; }
+.france-flag { font-size: 28px; }
+.stat-france-title { font-size: 16px; font-weight: 700; color: var(--gray-900); }
+.stat-france-sub { font-size: 13px; color: var(--gray-500); font-weight: 500; }
 
 /* ===== HOW IT WORKS ===== */
 .how-section {
@@ -1331,7 +1337,7 @@ footer {
 
   /* ---- HERO TITLE ---- */
   .hero { padding: 120px 16px 60px; }
-  .hero h1 { font-size: 28px; letter-spacing: -0.5px; line-height: 1.15; }
+  .hero h1 { font-size: 24px; letter-spacing: -0.5px; line-height: 1.2; }
   .hero h1 .desktop-only { display: none; }
   .hero-nowrap { white-space: normal !important; }
   .hero-rotating-wrapper { height: 1.2em; }
@@ -1398,7 +1404,7 @@ footer {
   .ai-prompt:nth-child(3) { animation-name: promptCycleMobile; }
 
   /* ---- CTA BOTTOM TITLE ---- */
-  .final-cta h2 { font-size: 24px; letter-spacing: -0.5px; }
+  .final-cta h2 { font-size: 21px; letter-spacing: -0.5px; }
   .cta-rotating-wrapper { height: 1.25em; }
 }
 
@@ -1438,7 +1444,7 @@ footer {
     Now in private beta
   </div>
   <h1>
-    Find your next<br class="desktop-only"><span class="hero-nowrap">Market Research <span class="hero-rotating-wrapper" id="heroRotator"><span class="hero-rotating-word" style="color:#FF374E;">partners</span><span class="hero-rotating-word" style="color:#00EF8B;">suppliers</span><span class="hero-rotating-word" style="color:#000000;">clients</span></span>,</span><br>
+    Find your next<br class="desktop-only"> <span class="hero-nowrap">Market Research <span class="hero-rotating-wrapper" id="heroRotator"><span class="hero-rotating-word" style="color:#FF374E;">partners</span><span class="hero-rotating-word" style="color:#00EF8B;">suppliers</span><span class="hero-rotating-word" style="color:#000000;">clients</span></span><span class="comma">,</span></span><br>
     <span class="highlight">at the right time.</span>
   </h1>
   <p class="subtitle">
@@ -1823,6 +1829,15 @@ footer {
       <div class="stat-number">9</div>
       <div class="stat-label">Industry categories</div>
     </div>
+    <div class="stat-card stat-france" style="grid-column: 1 / -1;">
+      <div class="stat-france-inner">
+        <span class="france-flag">&#127467;&#127479;</span>
+        <div>
+          <div class="stat-france-title">French Market Research — mapped first</div>
+          <div class="stat-france-sub">More countries coming soon</div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -2043,7 +2058,7 @@ footer {
 
 <!-- FINAL CTA -->
 <section class="final-cta" id="access">
-  <h2>Ready to find your next Market Research <span class="cta-rotating-wrapper" id="ctaRotator"><span class="cta-rotating-word" style="color: #007BFF;">clients</span><span class="cta-rotating-word" style="color: #00EF8B;">partners</span><span class="cta-rotating-word" style="color: #FF374E;">suppliers</span></span> ?</h2>
+  <h2>Ready to find your next Market Research <span class="cta-rotating-wrapper" id="ctaRotator"><span class="cta-rotating-word" style="color: #007BFF;">clients</span><span class="cta-rotating-word" style="color: #00EF8B;">partners</span><span class="cta-rotating-word" style="color: #FF374E;">suppliers</span></span>?</h2>
   <p>Join the private beta. Get early access and shape the product with us.</p>
   <form class="hero-email waitlist-form" style="display: inline-flex;" id="ctaForm">
     <input type="email" placeholder="your@email.com" required>
