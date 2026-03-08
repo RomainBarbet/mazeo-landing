@@ -371,18 +371,27 @@ nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.06); }
   animation: cardAppear 0.4s ease-out forwards;
 }
 .mock-card img { width: 75%; height: 75%; object-fit: contain; border-radius: 3px; }
+.mock-card-more {
+  width: 36px; height: 36px; border-radius: 6px;
+  background: var(--gray-50); border: 1px dashed var(--gray-300);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 7.5px; font-weight: 700; color: var(--gray-400);
+  letter-spacing: -0.2px;
+}
 .mock-card.selected {
   border-color: var(--blue-primary); background: var(--blue-light);
   box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
-  animation: cardAppear 0.4s ease-out forwards, cardSelect 20s ease-in-out infinite;
+  animation: cardAppear 0.4s ease-out forwards, cardSelect 36s ease-in-out infinite;
 }
 @keyframes cardAppear { to { opacity: 1; transform: scale(1); } }
 @keyframes cardSelect {
-  0%,12% { box-shadow: none; border-color: var(--gray-200); background: var(--white); }
-  15% { box-shadow: 0 0 0 2px rgba(0,123,255,0.3); border-color: var(--blue-primary); background: var(--blue-light); }
-  48% { box-shadow: 0 0 0 2px rgba(0,123,255,0.15); border-color: var(--blue-primary); background: var(--blue-light); }
-  52% { box-shadow: none; border-color: var(--gray-200); background: var(--white); }
-  100% { box-shadow: none; border-color: var(--gray-200); background: var(--white); }
+  0%,5.5% { box-shadow: none; border-color: var(--gray-200); background: var(--white); }
+  7% { box-shadow: 0 0 0 2px rgba(0,123,255,0.3); border-color: var(--blue-primary); background: var(--blue-light); }
+  80% { box-shadow: 0 0 0 2px rgba(0,123,255,0.15); border-color: var(--blue-primary); background: var(--blue-light); }
+  85% { box-shadow: none; border-color: var(--gray-200); background: var(--white); }
+  91% { box-shadow: none; border-color: var(--gray-200); background: var(--white); }
+  93% { box-shadow: 0 0 0 2px rgba(0,123,255,0.3); border-color: var(--blue-primary); background: var(--blue-light); }
+  100% { box-shadow: 0 0 0 2px rgba(0,123,255,0.3); border-color: var(--blue-primary); background: var(--blue-light); }
 }
 /* Staggered card appearance */
 .mock-card:nth-child(n) { animation-delay: calc((var(--n, 0)) * 0.02s); }
@@ -397,20 +406,22 @@ nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.06); }
 
 /* Right detail panel */
 .mock-panel {
-  width: 340px; background: var(--white); border-left: 1px solid var(--gray-200);
+  width: 390px; background: var(--white); border-left: 1px solid var(--gray-200);
   padding: 16px; position: absolute; right: 0; top: 0; height: 100%;
   transform: translateX(100%); opacity: 0;
-  animation: panelSlide 20s ease-in-out infinite;
+  animation: panelSlide 36s ease-in-out infinite;
   display: flex; flex-direction: column; gap: 6px; overflow-y: auto;
   text-align: left;
 }
-/* Timeline: 0-12% cards, 14-18% panel slides in, 18-30% info, 30-42% contacts tab, 42-52% reveal email, 52-56% panel out, rest pause */
+/* Timeline 35s: 0-12% cards, 13.5% click Ipsos, 15.5-25% General, 26-34% Strength, 36-44% Financial, 46-54% Recruitment, 57-84% Contacts, 85-90% out */
 @keyframes panelSlide {
-  0%,14.5% { transform: translateX(100%); opacity: 0; }
-  16% { transform: translateX(0); opacity: 1; }
-  88% { transform: translateX(0); opacity: 1; }
-  93% { transform: translateX(100%); opacity: 0; }
-  100% { transform: translateX(100%); opacity: 0; }
+  0%,5.5% { transform: translateX(100%); opacity: 0; }
+  7% { transform: translateX(0); opacity: 1; }
+  80% { transform: translateX(0); opacity: 1; }
+  85% { transform: translateX(100%); opacity: 0; }
+  91% { transform: translateX(100%); opacity: 0; }
+  93% { transform: translateX(0); opacity: 1; }
+  100% { transform: translateX(0); opacity: 1; }
 }
 .mock-panel-header { display: flex; align-items: flex-start; gap: 8px; }
 .mock-panel-avatar {
@@ -426,59 +437,207 @@ nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.06); }
   font-size: 9.5px; font-weight: 700;
 }
 .mock-badge.high { background: var(--green-light); color: #006B3F; }
-/* Panel identity section */
-.mock-panel-identity {
-  font-size: 8.5px; color: var(--gray-500); line-height: 1.5;
-  border-bottom: 1px solid var(--gray-200); padding-bottom: 6px;
-  opacity: 0; animation: infoFade 20s ease-out infinite;
+/* ===== INFO TAB - General + SUB-TABS ===== */
+.mock-page-title {
+  font-size: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px;
+  color: var(--gray-400); margin-bottom: 2px;
 }
-@keyframes infoFade {
-  0%,16% { opacity: 0; transform: translateY(4px); }
-  18% { opacity: 1; transform: translateY(0); }
-  88% { opacity: 1; }
-  93% { opacity: 0; }
-  100% { opacity: 0; }
+/* General content (company info overview) — shown when General sub-tab active */
+.mock-info-overview {
+  display: flex; flex-direction: column; gap: 5px;
+  opacity: 0; max-height: 0; overflow: hidden;
+  animation: infoOverview 36s ease infinite;
 }
-/* Panel info grid (HQ, Size, etc.) */
+@keyframes infoOverview {
+  0%,6.5% { opacity: 0; max-height: 0; }
+  8% { opacity: 1; max-height: 300px; }
+  20.5% { opacity: 1; max-height: 300px; }
+  21.5% { opacity: 0; max-height: 0; }
+  100% { opacity: 0; max-height: 0; }
+}
+.mock-info-desc {
+  font-size: 8.5px; color: var(--gray-500); line-height: 1.35;
+}
 .mock-info-grid {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 4px 10px;
-  opacity: 0; animation: infoFade 20s ease-out infinite;
-  animation-delay: 0.15s;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 2px 8px;
 }
-.mock-info-item {}
-.mock-info-label { font-size: 7.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; color: var(--gray-400); }
-.mock-info-value { font-size: 9.5px; font-weight: 600; color: var(--gray-700); }
-.mock-signal {
-  margin-top: 4px; padding: 6px 8px; border-radius: 6px;
-  background: var(--green-light); border: 1px solid rgba(0,239,139,0.3);
+.mock-info-field-label {
+  font-size: 6.5px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.4px; color: var(--gray-400);
+}
+.mock-info-field-value {
+  font-size: 9px; font-weight: 600; color: var(--gray-700); margin-bottom: 3px;
+}
+.mock-hiring-badge {
   display: flex; align-items: center; gap: 5px;
-  font-size: 9.5px; font-weight: 600; color: #065F46;
-  opacity: 0; animation: sigAppear 20s ease-out infinite;
+  padding: 4px 8px; border-radius: 5px;
+  background: var(--green-light); border: 1px solid rgba(0,239,139,0.3);
+  font-size: 8.5px; font-weight: 600; color: #065F46;
 }
-@keyframes sigAppear {
-  0%,18% { opacity: 0; transform: translateY(4px); }
-  20% { opacity: 1; transform: translateY(0); }
-  88% { opacity: 1; }
-  93% { opacity: 0; }
-  100% { opacity: 0; }
-}
-.mock-signal .signal-dot {
+.mock-hiring-badge .signal-dot {
   width: 5px; height: 5px; border-radius: 50%;
   background: var(--green); animation: pulse-dot 2s infinite;
 }
-.mock-tag-row { display: flex; gap: 3px; flex-wrap: wrap; }
+.mock-tag-row { display: flex; gap: 4px; flex-wrap: wrap; }
 .mock-tag {
-  padding: 2px 6px; border-radius: 3px; font-size: 8.5px; font-weight: 600;
-  background: var(--gray-100); color: var(--gray-500);
-  opacity: 0; animation: tagFade 20s ease-out infinite;
+  padding: 2px 6px; border-radius: 3px; font-size: 7.5px;
+  font-weight: 600; background: var(--gray-100); color: var(--gray-500);
 }
-@keyframes tagFade {
-  0%,17% { opacity: 0; }
-  19% { opacity: 1; }
-  88% { opacity: 1; }
-  93% { opacity: 0; }
-  100% { opacity: 0; }
+
+/* Sub-tabs row (General | MR Strength | Financial Health | MR Recruitment) */
+.mock-subtabs {
+  display: flex; gap: 0; border-bottom: 1px solid var(--gray-200);
+  margin-bottom: 3px;
+  opacity: 0; max-height: 0; overflow: hidden;
+  animation: subtabsVis 36s ease infinite;
 }
+@keyframes subtabsVis {
+  0%,5.5% { opacity: 0; max-height: 0; }
+  7% { opacity: 1; max-height: 30px; }
+  53% { opacity: 1; max-height: 30px; }
+  55% { opacity: 0; max-height: 0; }
+  100% { opacity: 0; max-height: 0; }
+}
+.mock-subtab {
+  flex: 1; padding: 3px 0; text-align: center;
+  font-size: 7px; font-weight: 600; color: var(--gray-400);
+  border-bottom: 1.5px solid transparent; cursor: default;
+  white-space: nowrap;
+}
+/* General sub-tab — active first when panel opens */
+.mock-subtab.st-general { animation: stGeneral 36s ease infinite; }
+@keyframes stGeneral {
+  0%,5.5% { color: var(--gray-400); border-bottom-color: transparent; }
+  7% { color: var(--blue-primary); border-bottom-color: var(--blue-primary); }
+  20% { color: var(--blue-primary); border-bottom-color: var(--blue-primary); }
+  21% { color: var(--gray-400); border-bottom-color: transparent; }
+  100% { color: var(--gray-400); border-bottom-color: transparent; }
+}
+.mock-subtab.st-strength { animation: stStrength 36s ease infinite; }
+@keyframes stStrength {
+  0%,20.5% { color: var(--gray-400); border-bottom-color: transparent; }
+  21% { color: var(--blue-primary); border-bottom-color: var(--blue-primary); }
+  31.5% { color: var(--blue-primary); border-bottom-color: var(--blue-primary); }
+  32% { color: var(--gray-400); border-bottom-color: transparent; }
+  100% { color: var(--gray-400); border-bottom-color: transparent; }
+}
+.mock-subtab.st-financial { animation: stFinancial 36s ease infinite; }
+@keyframes stFinancial {
+  0%,31.5% { color: var(--gray-400); border-bottom-color: transparent; }
+  32% { color: var(--blue-primary); border-bottom-color: var(--blue-primary); }
+  42.5% { color: var(--blue-primary); border-bottom-color: var(--blue-primary); }
+  43% { color: var(--gray-400); border-bottom-color: transparent; }
+  100% { color: var(--gray-400); border-bottom-color: transparent; }
+}
+.mock-subtab.st-recruitment { animation: stRecruitment 36s ease infinite; }
+@keyframes stRecruitment {
+  0%,42.5% { color: var(--gray-400); border-bottom-color: transparent; }
+  43% { color: var(--blue-primary); border-bottom-color: var(--blue-primary); }
+  52% { color: var(--blue-primary); border-bottom-color: var(--blue-primary); }
+  53% { color: var(--gray-400); border-bottom-color: transparent; }
+  100% { color: var(--gray-400); border-bottom-color: transparent; }
+}
+
+/* SUB-PAGE: MR Strength (specializations) */
+.mock-page-spec {
+  display: flex; flex-direction: column; gap: 5px;
+  opacity: 0; max-height: 0; overflow: hidden;
+  animation: pageSpec 36s ease infinite;
+}
+@keyframes pageSpec {
+  0%,20.5% { opacity: 0; max-height: 0; }
+  22% { opacity: 1; max-height: 200px; }
+  31.5% { opacity: 1; max-height: 200px; }
+  32% { opacity: 0; max-height: 0; }
+  100% { opacity: 0; max-height: 0; }
+}
+.mock-spec-row { display: flex; align-items: center; gap: 6px; }
+.mock-spec-label { font-size: 8px; font-weight: 600; color: var(--gray-500); width: 85px; flex-shrink: 0; text-align: right; }
+.mock-spec-bar { flex: 1; height: 6px; background: var(--gray-100); border-radius: 3px; overflow: hidden; }
+.mock-spec-bar-fill {
+  height: 100%; border-radius: 3px; background: var(--blue-primary); width: 0;
+  animation: barGrow 36s ease-out infinite;
+}
+.mock-spec-bar-fill.bar-85 { --target: 85%; }
+.mock-spec-bar-fill.bar-72 { --target: 72%; animation-delay: 0.15s; }
+.mock-spec-bar-fill.bar-68 { --target: 68%; animation-delay: 0.3s; }
+.mock-spec-bar-fill.bar-90 { --target: 90%; animation-delay: 0.08s; }
+@keyframes barGrow {
+  0%,21.5% { width: 0; }
+  24% { width: var(--target); }
+  31.5% { width: var(--target); }
+  32% { width: 0; }
+  100% { width: 0; }
+}
+.mock-spec-pct { font-size: 8px; font-weight: 700; color: var(--gray-700); width: 24px; }
+
+/* SUB-PAGE: Financial Health */
+.mock-page-financial {
+  display: flex; flex-direction: column; gap: 5px;
+  opacity: 0; max-height: 0; overflow: hidden;
+  animation: pageFin 36s ease infinite;
+}
+@keyframes pageFin {
+  0%,31.5% { opacity: 0; max-height: 0; }
+  33% { opacity: 1; max-height: 200px; }
+  42% { opacity: 1; max-height: 200px; }
+  43% { opacity: 0; max-height: 0; }
+  100% { opacity: 0; max-height: 0; }
+}
+.mock-health-badge {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 8px; border-radius: 6px;
+  background: var(--green-light); border: 1px solid rgba(0,239,139,0.3);
+}
+.mock-health-icon { font-size: 12px; }
+.mock-health-text { font-size: 9.5px; font-weight: 700; color: #065F46; }
+.mock-health-sub { font-size: 8px; color: #065F46; opacity: 0.7; }
+.mock-metric-row { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+.mock-metric-item {
+  padding: 5px 8px; border-radius: 5px;
+  background: var(--gray-50); border: 1px solid var(--gray-200);
+}
+.mock-metric-label { font-size: 7px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; color: var(--gray-400); }
+.mock-metric-value { font-size: 10px; font-weight: 700; color: var(--gray-700); display: flex; align-items: center; gap: 3px; }
+.mock-metric-trend { font-size: 7.5px; font-weight: 700; color: #059669; }
+.mock-metric-trend.up::before { content: '▲ '; font-size: 5px; }
+
+/* SUB-PAGE: MR Recruitment */
+.mock-page-signals {
+  display: flex; flex-direction: column; gap: 5px;
+  opacity: 0; max-height: 0; overflow: hidden;
+  animation: pageSig 36s ease infinite;
+}
+@keyframes pageSig {
+  0%,42.5% { opacity: 0; max-height: 0; }
+  44% { opacity: 1; max-height: 200px; }
+  52% { opacity: 1; max-height: 200px; }
+  54% { opacity: 0; max-height: 0; }
+  100% { opacity: 0; max-height: 0; }
+}
+.mock-signal-badge {
+  display: flex; align-items: center; gap: 5px;
+  padding: 5px 8px; border-radius: 6px;
+  background: var(--green-light); border: 1px solid rgba(0,239,139,0.3);
+  font-size: 9px; font-weight: 600; color: #065F46;
+}
+.mock-signal-badge .signal-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--green); animation: pulse-dot 2s infinite;
+}
+.mock-job-item {
+  display: flex; align-items: center; gap: 6px;
+  padding: 4px 8px; border-radius: 5px;
+  background: var(--gray-50); border: 1px solid var(--gray-200);
+}
+.mock-job-icon {
+  width: 16px; height: 16px; border-radius: 3px;
+  background: var(--blue-primary); display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.mock-job-icon svg { width: 9px; height: 9px; }
+.mock-job-title { font-size: 8.5px; font-weight: 600; color: var(--gray-700); }
+.mock-job-date { font-size: 7.5px; color: var(--gray-400); }
 /* Panel tabs (Info / Contacts) */
 .mock-panel-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--gray-200); margin-bottom: 4px; }
 .mock-panel-tab {
@@ -486,22 +645,22 @@ nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.06); }
   color: var(--gray-400); border-bottom: 2px solid transparent; cursor: default;
 }
 .mock-panel-tab.active { color: var(--blue-primary); border-bottom-color: var(--blue-primary); }
-/* Info tab content */
-.mock-tab-info { display: flex; flex-direction: column; gap: 6px; animation: tabInfoVis 20s ease infinite; }
+/* Info tab content — visible for General + sub-tabs cycle */
+.mock-tab-info { display: flex; flex-direction: column; gap: 0; overflow: hidden; animation: tabInfoVis 36s ease infinite; }
 @keyframes tabInfoVis {
-  0%,15.5% { opacity: 0; max-height: 0; overflow: hidden; }
-  17% { opacity: 1; max-height: 300px; }
-  43% { opacity: 1; max-height: 300px; }
-  45% { opacity: 0; max-height: 0; overflow: hidden; }
-  100% { opacity: 0; max-height: 0; overflow: hidden; }
+  0%,6.5% { opacity: 0; max-height: 0; }
+  8% { opacity: 1; max-height: 500px; }
+  53% { opacity: 1; max-height: 500px; }
+  55% { opacity: 0; max-height: 0; }
+  100% { opacity: 0; max-height: 0; }
 }
 /* Contacts tab content */
-.mock-tab-contacts { display: flex; flex-direction: column; gap: 6px; opacity: 0; max-height: 0; overflow: hidden; animation: tabContactsVis 20s ease infinite; }
+.mock-tab-contacts { display: flex; flex-direction: column; gap: 6px; opacity: 0; max-height: 0; overflow: hidden; animation: tabContactsVis 36s ease infinite; }
 @keyframes tabContactsVis {
-  0%,44% { opacity: 0; max-height: 0; }
-  45.5% { opacity: 1; max-height: 300px; }
-  88% { opacity: 1; max-height: 300px; }
-  93% { opacity: 0; max-height: 0; }
+  0%,55% { opacity: 0; max-height: 0; }
+  56.5% { opacity: 1; max-height: 300px; }
+  79% { opacity: 1; max-height: 300px; }
+  84% { opacity: 0; max-height: 0; }
   100% { opacity: 0; max-height: 0; }
 }
 .mock-contact-row {
@@ -513,109 +672,163 @@ nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.06); }
   background: linear-gradient(135deg, var(--blue-primary), var(--green));
   display: flex; align-items: center; justify-content: center;
   color: white; font-size: 8.5px; font-weight: 700; flex-shrink: 0;
+  overflow: hidden;
 }
+.mock-contact-avatar img { width: 100%; height: 100%; object-fit: cover; }
 .mock-contact-info { flex: 1; min-width: 0; }
 .mock-contact-name { font-size: 10px; font-weight: 700; color: var(--gray-700); }
 .mock-contact-role { font-size: 8.5px; color: var(--gray-400); }
 .mock-contact-email {
   font-size: 8.5px; color: var(--blue-primary); font-weight: 600;
   opacity: 0; max-height: 0; overflow: hidden;
-  animation: emailReveal 20s ease infinite;
+  animation: emailReveal 36s ease infinite;
 }
 .mock-contact-row:nth-child(1) .mock-contact-email { animation-delay: 0s; }
 .mock-contact-row:nth-child(2) .mock-contact-email { animation-delay: 0.3s; }
 .mock-contact-row:nth-child(3) .mock-contact-email { animation-delay: 0.6s; }
+.mock-see-more {
+  margin-top: 6px;
+  padding: 7px 10px;
+  background: var(--gray-50);
+  border: 1px dashed var(--gray-200);
+  border-radius: 6px;
+  text-align: center;
+  cursor: pointer;
+}
+.mock-see-more-text {
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--primary);
+  letter-spacing: 0.2px;
+}
 @keyframes emailReveal {
-  0%,58% { opacity: 0; max-height: 0; }
-  59.5% { opacity: 1; max-height: 20px; }
-  88% { opacity: 1; max-height: 20px; }
-  93% { opacity: 0; max-height: 0; }
+  0%,66.5% { opacity: 0; max-height: 0; }
+  68% { opacity: 1; max-height: 20px; }
+  79% { opacity: 1; max-height: 20px; }
+  84% { opacity: 0; max-height: 0; }
   100% { opacity: 0; max-height: 0; }
 }
 .mock-reveal-btn {
   padding: 5px 12px; border-radius: 5px; font-size: 9.5px; font-weight: 700;
   background: var(--blue-primary); color: white; align-self: flex-start;
-  cursor: default; opacity: 0; animation: revealBtnAnim 20s ease infinite;
+  cursor: default; opacity: 0; animation: revealBtnAnim 36s ease infinite;
 }
 @keyframes revealBtnAnim {
-  0%,45% { opacity: 0; transform: scale(0.9); }
-  47% { opacity: 1; transform: scale(1); }
-  57% { opacity: 1; transform: scale(1); }
-  58% { opacity: 0.6; transform: scale(0.95); }
-  59.5% { opacity: 1; transform: scale(1); }
-  88% { opacity: 1; }
-  93% { opacity: 0; }
+  0%,56% { opacity: 0; transform: scale(0.9); }
+  57.5% { opacity: 1; transform: scale(1); }
+  65% { opacity: 1; transform: scale(1); }
+  66% { opacity: 0.6; transform: scale(0.95); }
+  68% { opacity: 1; transform: scale(1); }
+  79% { opacity: 1; }
+  84% { opacity: 0; }
   100% { opacity: 0; }
 }
 /* Tab switching animation for the tab labels */
-.mock-panel-tab.tab-info { animation: tabInfoActive 20s ease infinite; }
+.mock-panel-tab.tab-info { animation: tabInfoActive 36s ease infinite; }
 @keyframes tabInfoActive {
-  0%,15.5% { color: var(--gray-400); border-bottom-color: transparent; }
-  17% { color: var(--blue-primary); border-bottom-color: var(--blue-primary); }
-  43% { color: var(--blue-primary); border-bottom-color: var(--blue-primary); }
-  44.5% { color: var(--gray-400); border-bottom-color: transparent; }
+  0%,14% { color: var(--gray-400); border-bottom-color: transparent; }
+  15.5% { color: var(--blue-primary); border-bottom-color: var(--blue-primary); }
+  55% { color: var(--blue-primary); border-bottom-color: var(--blue-primary); }
+  57% { color: var(--gray-400); border-bottom-color: transparent; }
   100% { color: var(--gray-400); border-bottom-color: transparent; }
 }
-.mock-panel-tab.tab-contacts { animation: tabContactsActive 20s ease infinite; }
+.mock-panel-tab.tab-contacts { animation: tabContactsActive 36s ease infinite; }
 @keyframes tabContactsActive {
-  0%,44% { color: var(--gray-400); border-bottom-color: transparent; }
-  45% { color: var(--blue-primary); border-bottom-color: var(--blue-primary); }
-  88% { color: var(--blue-primary); border-bottom-color: var(--blue-primary); }
-  93% { color: var(--gray-400); border-bottom-color: transparent; }
+  0%,57% { color: var(--gray-400); border-bottom-color: transparent; }
+  58% { color: var(--blue-primary); border-bottom-color: var(--blue-primary); }
+  84% { color: var(--blue-primary); border-bottom-color: var(--blue-primary); }
+  89% { color: var(--gray-400); border-bottom-color: transparent; }
   100% { color: var(--gray-400); border-bottom-color: transparent; }
 }
-/* Cursor — 20s timeline: click Ipsos logo at 15%, click Contacts tab at 44%, click Reveal at 58% */
+/* Cursor — 36s timeline: Ipsos→General→Strength→Financial→Recruitment→Contacts→Reveal */
 .mock-cursor {
   position: absolute; width: 28px; height: 28px; z-index: 10;
   opacity: 0; pointer-events: none;
-  animation: cursorAnim 20s ease-in-out infinite;
+  animation: cursorAnim 36s ease-in-out infinite;
   filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.35));
 }
 .mock-cursor svg { width: 28px; height: 28px; }
 @keyframes cursorAnim {
-  /* Start from center, move to Ipsos logo (1st card in MR Agencies, top-right quadrant) */
-  0%,8% { opacity: 0; top: 40%; left: 30%; }
-  11% { opacity: 1; top: 40%; left: 30%; }
-  14% { opacity: 1; top: 18%; left: 51%; }
+  0% { opacity: 0; top: 40%; left: 30%; }
+  1.5% { opacity: 1; top: 40%; left: 30%; }
+  5% { opacity: 1; top: 18%; left: 51%; }
   /* Click on Ipsos */
-  15% { opacity: 1; top: 18%; left: 51%; transform: scale(0.8); }
-  16.5% { opacity: 1; top: 18%; left: 51%; transform: scale(1); }
-  28% { opacity: 1; top: 18%; left: 51%; }
-  /* Move to Contacts tab in the panel */
-  38% { opacity: 1; top: 23%; left: 85%; }
-  43% { opacity: 1; top: 23%; left: 89%; }
+  6% { opacity: 1; top: 18%; left: 51%; transform: scale(0.8); }
+  7% { opacity: 1; top: 18%; left: 51%; transform: scale(1); }
+  /* Move into panel, browse General info */
+  11% { opacity: 1; top: 40%; left: 75%; }
+  18% { opacity: 1; top: 40%; left: 75%; }
+  20% { opacity: 1; top: 29%; left: 76%; }
+  /* Click Strength */
+  21% { opacity: 1; top: 29%; left: 76%; transform: scale(0.8); }
+  22% { opacity: 1; top: 29%; left: 76%; transform: scale(1); }
+  30% { opacity: 1; top: 29%; left: 76%; }
+  31.5% { opacity: 1; top: 29%; left: 82%; }
+  /* Click Financial Health */
+  32% { opacity: 1; top: 29%; left: 82%; transform: scale(0.8); }
+  33% { opacity: 1; top: 29%; left: 82%; transform: scale(1); }
+  41% { opacity: 1; top: 29%; left: 82%; }
+  42.5% { opacity: 1; top: 29%; left: 92%; }
+  /* Click MR Recruitment */
+  43% { opacity: 1; top: 29%; left: 92%; transform: scale(0.8); }
+  44% { opacity: 1; top: 29%; left: 92%; transform: scale(1); }
+  52% { opacity: 1; top: 29%; left: 92%; }
+  54% { opacity: 1; top: 23%; left: 89%; }
   /* Click on Contacts tab */
-  44% { opacity: 1; top: 23%; left: 89%; transform: scale(0.8); }
-  45.5% { opacity: 1; top: 23%; left: 89%; transform: scale(1); }
-  53% { opacity: 1; top: 23%; left: 89%; }
+  55% { opacity: 1; top: 23%; left: 89%; transform: scale(0.8); }
+  56% { opacity: 1; top: 23%; left: 89%; transform: scale(1); }
+  62% { opacity: 1; top: 23%; left: 89%; }
   /* Move to Reveal emails button */
-  56% { opacity: 1; top: 56%; left: 70%; }
-  57% { opacity: 1; top: 57%; left: 70%; }
+  64% { opacity: 1; top: 67%; left: 72%; }
+  66% { opacity: 1; top: 67%; left: 72%; }
   /* Click on Reveal */
-  58% { opacity: 1; top: 57%; left: 70%; transform: scale(0.8); }
-  59.5% { opacity: 1; top: 57%; left: 70%; transform: scale(1); }
-  70% { opacity: 1; top: 57%; left: 70%; }
-  76% { opacity: 0; top: 57%; left: 70%; }
-  100% { opacity: 0; top: 40%; left: 30%; }
+  66.5% { opacity: 1; top: 67%; left: 72%; transform: scale(0.8); }
+  67.5% { opacity: 1; top: 67%; left: 72%; transform: scale(1); }
+  76% { opacity: 1; top: 67%; left: 72%; }
+  79% { opacity: 0; top: 67%; left: 72%; }
+  86% { opacity: 0; top: 40%; left: 30%; }
+  87% { opacity: 1; top: 40%; left: 30%; }
+  91% { opacity: 1; top: 18%; left: 51%; }
+  /* 2nd cycle: Click on Ipsos */
+  92% { opacity: 1; top: 18%; left: 51%; transform: scale(0.8); }
+  93% { opacity: 1; top: 18%; left: 51%; transform: scale(1); }
+  97% { opacity: 1; top: 40%; left: 75%; }
+  100% { opacity: 1; top: 40%; left: 75%; }
 }
 .mock-click-ripple {
   position: absolute; width: 20px; height: 20px; border-radius: 50%;
   background: rgba(0,239,139,0.4); z-index: 9; opacity: 0; pointer-events: none;
-  animation: rippleAnim 20s ease-out infinite;
+  animation: rippleAnim 36s ease-out infinite;
 }
 @keyframes rippleAnim {
   /* Ripple on Ipsos logo */
-  0%,14.5% { top: 18%; left: 51%; opacity: 0; transform: scale(0); }
-  15% { top: 18%; left: 51%; opacity: 0.7; transform: scale(1); }
-  18% { top: 18%; left: 51%; opacity: 0; transform: scale(3.5); }
+  0%,5.5% { top: 18%; left: 51%; opacity: 0; transform: scale(0); }
+  6% { top: 18%; left: 51%; opacity: 0.7; transform: scale(1); }
+  8% { top: 18%; left: 51%; opacity: 0; transform: scale(3.5); }
+  /* Ripple on Strength sub-tab */
+  20.5% { top: 29%; left: 76%; opacity: 0; transform: scale(0); }
+  21% { top: 29%; left: 76%; opacity: 0.6; transform: scale(1); }
+  23% { top: 29%; left: 76%; opacity: 0; transform: scale(3); }
+  /* Ripple on Financial Health sub-tab */
+  31.5% { top: 29%; left: 82%; opacity: 0; transform: scale(0); }
+  32% { top: 29%; left: 82%; opacity: 0.6; transform: scale(1); }
+  34% { top: 29%; left: 82%; opacity: 0; transform: scale(3); }
+  /* Ripple on MR Recruitment sub-tab */
+  42.5% { top: 29%; left: 92%; opacity: 0; transform: scale(0); }
+  43% { top: 29%; left: 92%; opacity: 0.6; transform: scale(1); }
+  45% { top: 29%; left: 92%; opacity: 0; transform: scale(3); }
   /* Ripple on Contacts tab */
-  43.5% { top: 23%; left: 89%; opacity: 0; transform: scale(0); }
-  44% { top: 23%; left: 89%; opacity: 0.7; transform: scale(1); }
-  47% { top: 23%; left: 89%; opacity: 0; transform: scale(3.5); }
+  54.5% { top: 23%; left: 89%; opacity: 0; transform: scale(0); }
+  55% { top: 23%; left: 89%; opacity: 0.7; transform: scale(1); }
+  57% { top: 23%; left: 89%; opacity: 0; transform: scale(3.5); }
   /* Ripple on Reveal button */
-  57.5% { top: 57%; left: 70%; opacity: 0; transform: scale(0); }
-  58% { top: 57%; left: 70%; opacity: 0.7; transform: scale(1); }
-  61% { top: 57%; left: 70%; opacity: 0; transform: scale(3.5); }
+  66% { top: 67%; left: 72%; opacity: 0; transform: scale(0); }
+  66.5% { top: 67%; left: 72%; opacity: 0.7; transform: scale(1); }
+  68.5% { top: 67%; left: 72%; opacity: 0; transform: scale(3.5); }
+  /* 2nd cycle ripple on Ipsos */
+  91.5% { top: 18%; left: 51%; opacity: 0; transform: scale(0); }
+  92% { top: 18%; left: 51%; opacity: 0.7; transform: scale(1); }
+  94% { top: 18%; left: 51%; opacity: 0; transform: scale(3.5); }
   100% { opacity: 0; }
 }
 
@@ -789,6 +1002,17 @@ nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.06); }
   background: var(--white);
   transition: all 0.3s;
   position: relative;
+  opacity: 0;
+  transform: translateY(30px);
+}
+.step-card.visible {
+  animation: stepFadeIn 0.7s ease-out forwards;
+}
+.step-card.visible:nth-child(1) { animation-delay: 0.1s; }
+.step-card.visible:nth-child(2) { animation-delay: 0.35s; }
+.step-card.visible:nth-child(3) { animation-delay: 0.6s; }
+@keyframes stepFadeIn {
+  to { opacity: 1; transform: translateY(0); }
 }
 .step-card:hover { border-color: var(--blue-primary); box-shadow: 0 8px 32px rgba(26,140,255,0.08); }
 .step-number {
@@ -1537,6 +1761,7 @@ footer {
                     <div class="mock-card"><img src="https://img.logo.dev/philips.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Philips"></div>
                     <div class="mock-card"><img src="https://img.logo.dev/coca-cola.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Coca-Cola"></div>
                     <div class="mock-card"><img src="https://img.logo.dev/pepsico.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="PepsiCo"></div>
+                    <div class="mock-card-more">+777</div>
                   </div>
                 </div>
                 <div class="mock-quad q-agencies">
@@ -1557,9 +1782,7 @@ footer {
                     <div class="mock-card"><img src="https://img.logo.dev/mckinsey.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="McKinsey"></div>
                     <div class="mock-card"><img src="https://img.logo.dev/accenture.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Accenture"></div>
                     <div class="mock-card"><img src="https://img.logo.dev/cision.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Cision"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/happydemics.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Happydemics"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/appinio.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Appinio"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/wolframalpha.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Wolfram"></div>
+                    <div class="mock-card"><img src="https://img.logo.dev/harrisinteractive.fr?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Harris Interactive"></div>
                     <div class="mock-card"><img src="https://img.logo.dev/censuswide.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Censuswide"></div>
                     <div class="mock-card"><img src="https://img.logo.dev/savanta.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Savanta"></div>
                     <div class="mock-card"><img src="https://img.logo.dev/forrester.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Forrester"></div>
@@ -1580,6 +1803,7 @@ footer {
                     <div class="mock-card"><img src="https://img.logo.dev/ey.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="EY"></div>
                     <div class="mock-card"><img src="https://img.logo.dev/bcg.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="BCG"></div>
                     <div class="mock-card"><img src="https://img.logo.dev/wpp.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="WPP"></div>
+                    <div class="mock-card-more">+305</div>
                   </div>
                 </div>
                 <div class="mock-quad q-data">
@@ -1589,27 +1813,28 @@ footer {
                     <div class="mock-card"><img src="https://img.logo.dev/bilendi.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Bilendi"></div>
                     <div class="mock-card"><img src="https://img.logo.dev/cint.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Cint"></div>
                     <div class="mock-card"><img src="https://img.logo.dev/dynata.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Dynata"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/prodege.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Prodege"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/netquest.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Netquest"></div>
+                    <div class="mock-card"><img src="https://img.logo.dev/appinio.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Appinio"></div>
                     <div class="mock-card"><img src="https://img.logo.dev/norstatgroup.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Norstat"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/m3global.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="M3"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/pollfish.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Pollfish"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/lucid.co?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Lucid"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/bovitz.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Bovitz"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/rakuten.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Rakuten"></div>
                     <div class="mock-card"><img src="https://img.logo.dev/sago.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Sago"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/borderlesspanel.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Borderless"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/pureprofile.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Pureprofile"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/rep-data.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="RepData"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/dataspring.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="dataSpring"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/tapresearch.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="TapResearch"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/schlesingergroup.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Schlesinger"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/opinionaccess.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="OpinionAccess"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/recollective.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Recollective"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/innovatemr.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="InnovateMR"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/focusvision.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="FocusVision"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/askia.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Askia"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/eyesquare.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="eye square"></div>
+                    <div class="mock-card"><img src="https://img.logo.dev/alida.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Alida"></div>
+                    <div class="mock-card"><img src="https://img.logo.dev/potloc.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Potloc"></div>
+                    <div class="mock-card"><img src="https://img.logo.dev/roamler.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Roamler"></div>
+                    <div class="mock-card"><img src="https://img.logo.dev/guidepoint.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Guidepoint"></div>
+                    <div class="mock-card"><img src="https://img.logo.dev/testapic.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Testapic"></div>
+                    <div class="mock-card"><img src="https://img.logo.dev/testingtime.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="TestingTime"></div>
+                    <div class="mock-card"><img src="https://img.logo.dev/purespectrum.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="PureSpectrum"></div>
+                    <div class="mock-card"><img src="https://img.logo.dev/boltinsight.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Bolt Insight"></div>
+                    <div class="mock-card"><img src="https://img.logo.dev/mis-group.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="MIS Group"></div>
+                    <div class="mock-card"><img src="https://img.logo.dev/fairgen.ai?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Fairgen"></div>
+                    <div class="mock-card"><img src="https://img.logo.dev/tgmresearch.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="TGM Research"></div>
+                    <div class="mock-card"><img src="https://img.logo.dev/worldpanel.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Worldpanel"></div>
+                    <div class="mock-card"><img src="https://img.logo.dev/callson.fr?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Callson"></div>
+                    <div class="mock-card"><img src="https://img.logo.dev/airpanel.io?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Airpanel"></div>
+                    <div class="mock-card"><img src="https://img.logo.dev/mcmresearch.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="MCM Research"></div>
+                    <div class="mock-card"><img src="https://img.logo.dev/areyounet.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="AreYouNet"></div>
+                    <div class="mock-card"><img src="https://img.logo.dev/wesharetrust.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="WeShareTrust"></div>
+                    <div class="mock-card"><img src="https://img.logo.dev/episto.io?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Episto"></div>
+                    <div class="mock-card-more">+22</div>
                   </div>
                 </div>
                 <div class="mock-quad q-software">
@@ -1617,33 +1842,30 @@ footer {
                   <div class="mock-cards">
                     <div class="mock-card"><img src="https://img.logo.dev/qualtrics.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Qualtrics"></div>
                     <div class="mock-card"><img src="https://img.logo.dev/medallia.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Medallia"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/surveymonkey.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="SurveyMonkey"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/typeform.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Typeform"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/questionpro.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="QuestionPro"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/forsta.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Forsta"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/hotjar.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Hotjar"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/hubspot.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="HubSpot"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/semrush.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Semrush"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/tableau.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Tableau"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/mixpanel.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Mixpanel"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/amplitude.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Amplitude"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/clarabridge.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Clarabridge"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/miro.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Miro"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/dovetail.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Dovetail"></div>
+                    <div class="mock-card"><img src="https://img.logo.dev/contentsquare.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Contentsquare"></div>
+                    <div class="mock-card"><img src="https://img.logo.dev/criteo.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Criteo"></div>
+                    <div class="mock-card"><img src="https://img.logo.dev/meltwater.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Meltwater"></div>
+                    <div class="mock-card"><img src="https://img.logo.dev/talkwalker.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Talkwalker"></div>
+                    <div class="mock-card"><img src="https://img.logo.dev/metrixlab.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="MetrixLab"></div>
+                    <div class="mock-card"><img src="https://img.logo.dev/teads.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Teads"></div>
+                    <div class="mock-card"><img src="https://img.logo.dev/happydemics.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Happydemics"></div>
                     <div class="mock-card"><img src="https://img.logo.dev/usertesting.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="UserTesting"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/lookback.io?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Lookback"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/spss.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="SPSS"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/powerbi.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Power BI"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/domo.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Domo"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/sisense.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Sisense"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/airtable.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Airtable"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/notion.so?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Notion"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/zapier.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Zapier"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/figma.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Figma"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/slack.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Slack"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/salesforce.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Salesforce"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/zendesk.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Zendesk"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/intercom.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Intercom"></div>
+                    <div class="mock-card"><img src="https://img.logo.dev/confirmit.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Confirmit"></div>
+                    <div class="mock-card"><img src="https://img.logo.dev/launchmetrics.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Launchmetrics"></div>
+                    <div class="mock-card"><img src="https://img.logo.dev/askia.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Askia"></div>
+                    <div class="mock-card"><img src="https://img.logo.dev/feedier.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Feedier"></div>
+                    <div class="mock-card"><img src="https://img.logo.dev/luxurynsight.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Luxurynsight"></div>
+                    <div class="mock-card"><img src="https://img.logo.dev/eloquant.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Eloquant"></div>
+                    <div class="mock-card"><img src="https://img.logo.dev/vocaza.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Vocaza"></div>
+                    <div class="mock-card"><img src="https://img.logo.dev/onclusive.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Onclusive"></div>
+                    <div class="mock-card"><img src="https://img.logo.dev/linkfluence.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Linkfluence"></div>
+                    <div class="mock-card"><img src="https://img.logo.dev/datelia.io?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Datelia"></div>
+                    <div class="mock-card"><img src="https://img.logo.dev/azira.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Azira"></div>
+                    <div class="mock-card"><img src="https://img.logo.dev/trajaan.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Trajaan"></div>
+                    <div class="mock-card"><img src="https://img.logo.dev/wisersolutions.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Wiser Solutions"></div>
+                    <div class="mock-card"><img src="https://img.logo.dev/lesphinx-developpement.fr?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Le Sphinx"></div>
+                    <div class="mock-card"><img src="https://img.logo.dev/licter.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Licter"></div>
+                    <div class="mock-card-more">+17</div>
                   </div>
                 </div>
               </div>
@@ -1662,33 +1884,107 @@ footer {
                   <div class="mock-panel-tab tab-info">Info</div>
                   <div class="mock-panel-tab tab-contacts">Contacts</div>
                 </div>
-                <!-- Info tab content -->
+                <!-- Info tab content: overview → sub-tabs cycle -->
                 <div class="mock-tab-info">
-                  <div class="mock-panel-identity">
-                    Leader mondial des études de marché — mesure de marque, expérience client, opinion, media/audience, panels à grande échelle.
+                  <!-- Sub-tabs row (appears immediately with panel) -->
+                  <div class="mock-subtabs">
+                    <div class="mock-subtab st-general">General</div>
+                    <div class="mock-subtab st-strength">Strength</div>
+                    <div class="mock-subtab st-financial">Financial Health</div>
+                    <div class="mock-subtab st-recruitment">MR Recruitment</div>
                   </div>
-                  <div class="mock-info-grid">
-                    <div class="mock-info-item"><div class="mock-info-label">Headquarters</div><div class="mock-info-value">Paris, FR</div></div>
-                    <div class="mock-info-item"><div class="mock-info-label">Size</div><div class="mock-info-value">Grand Groupe</div></div>
-                    <div class="mock-info-item"><div class="mock-info-label">Employees</div><div class="mock-info-value">1 162</div></div>
-                    <div class="mock-info-item"><div class="mock-info-label">Founded</div><div class="mock-info-value">1975</div></div>
-                    <div class="mock-info-item"><div class="mock-info-label">Contacts</div><div class="mock-info-value">405</div></div>
-                    <div class="mock-info-item"><div class="mock-info-label">Country</div><div class="mock-info-value">FR, GP, RE</div></div>
+                  <!-- Info Overview (company details) -->
+                  <div class="mock-info-overview">
+                    <div class="mock-info-desc">Leader mondial des études de marché — mesure de marque, expérience client, opinion, media/audience, panels à grande échelle.</div>
+                    <div class="mock-info-grid">
+                      <div><div class="mock-info-field-label">Headquarters</div><div class="mock-info-field-value">Paris, FR</div></div>
+                      <div><div class="mock-info-field-label">Size</div><div class="mock-info-field-value">Grand Groupe</div></div>
+                      <div><div class="mock-info-field-label">Employees</div><div class="mock-info-field-value">1 162</div></div>
+                      <div><div class="mock-info-field-label">Founded</div><div class="mock-info-field-value">1975</div></div>
+                      <div><div class="mock-info-field-label">Contacts</div><div class="mock-info-field-value">405</div></div>
+                      <div><div class="mock-info-field-label">Country</div><div class="mock-info-field-value">FR, GP, RE</div></div>
+                    </div>
+                    <div class="mock-hiring-badge"><span class="signal-dot"></span> Actively hiring 3 MR roles</div>
+                    <div class="mock-tag-row">
+                      <span class="mock-tag">405 contacts</span>
+                      <span class="mock-tag">Grand Groupe</span>
+                      <span class="mock-tag">Paris</span>
+                    </div>
                   </div>
-                  <div class="mock-signal">
-                    <span class="signal-dot"></span>
-                    Actively hiring 3 MR roles
+                  <!-- Sub-page: MR Strength (specializations) -->
+                  <div class="mock-page-spec">
+                    <div class="mock-spec-row">
+                      <div class="mock-spec-label">Brand Tracking</div>
+                      <div class="mock-spec-bar"><div class="mock-spec-bar-fill bar-85"></div></div>
+                      <div class="mock-spec-pct">85%</div>
+                    </div>
+                    <div class="mock-spec-row">
+                      <div class="mock-spec-label">CX & Satisfaction</div>
+                      <div class="mock-spec-bar"><div class="mock-spec-bar-fill bar-72"></div></div>
+                      <div class="mock-spec-pct">72%</div>
+                    </div>
+                    <div class="mock-spec-row">
+                      <div class="mock-spec-label">Opinion & Social</div>
+                      <div class="mock-spec-bar"><div class="mock-spec-bar-fill bar-68"></div></div>
+                      <div class="mock-spec-pct">68%</div>
+                    </div>
+                    <div class="mock-spec-row">
+                      <div class="mock-spec-label">Media & Audience</div>
+                      <div class="mock-spec-bar"><div class="mock-spec-bar-fill bar-90"></div></div>
+                      <div class="mock-spec-pct">90%</div>
+                    </div>
                   </div>
-                  <div class="mock-tag-row">
-                    <span class="mock-tag">405 contacts</span>
-                    <span class="mock-tag">Grand Groupe</span>
-                    <span class="mock-tag">Paris</span>
+                  <!-- Sub-page: Financial Health -->
+                  <div class="mock-page-financial">
+                    <div class="mock-health-badge">
+                      <span class="mock-health-icon">✅</span>
+                      <div><div class="mock-health-text">Healthy</div><div class="mock-health-sub">Growing &amp; profitable</div></div>
+                    </div>
+                    <div class="mock-metric-row">
+                      <div class="mock-metric-item">
+                        <div class="mock-metric-label">Revenue</div>
+                        <div class="mock-metric-value">€2.4B <span class="mock-metric-trend up">+12%</span></div>
+                      </div>
+                      <div class="mock-metric-item">
+                        <div class="mock-metric-label">EBITDA</div>
+                        <div class="mock-metric-value">15.2% <span class="mock-metric-trend up">+2.1pt</span></div>
+                      </div>
+                    </div>
+                    <div class="mock-metric-row">
+                      <div class="mock-metric-item">
+                        <div class="mock-metric-label">Headcount</div>
+                        <div class="mock-metric-value">18 400 <span class="mock-metric-trend up">+8%</span></div>
+                      </div>
+                      <div class="mock-metric-item">
+                        <div class="mock-metric-label">Score</div>
+                        <div class="mock-metric-value">A+ <span style="font-size:8px;color:#059669;">Strong</span></div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Sub-page: MR Recruitment -->
+                  <div class="mock-page-signals">
+                    <div class="mock-signal-badge">
+                      <span class="signal-dot"></span>
+                      Actively hiring — 3 MR roles open
+                    </div>
+                    <div class="mock-job-item">
+                      <div class="mock-job-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+                      <div><div class="mock-job-title">Head of Qual Research</div><div class="mock-job-date">Posted 3d ago</div></div>
+                    </div>
+                    <div class="mock-job-item">
+                      <div class="mock-job-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+                      <div><div class="mock-job-title">CX Project Manager</div><div class="mock-job-date">Posted 5d ago</div></div>
+                    </div>
+                    <div class="mock-job-item">
+                      <div class="mock-job-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+                      <div><div class="mock-job-title">Data Analyst – Panels</div><div class="mock-job-date">Posted 1w ago</div></div>
+                    </div>
                   </div>
                 </div>
                 <!-- Contacts tab content -->
                 <div class="mock-tab-contacts">
                   <div class="mock-contact-row">
-                    <div class="mock-contact-avatar">SL</div>
+                    <div class="mock-contact-avatar"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=SophieLaurent&backgroundColor=b6e3f4" alt="SL"></div>
                     <div class="mock-contact-info">
                       <div class="mock-contact-name">Sophie Laurent</div>
                       <div class="mock-contact-role">Head of Research</div>
@@ -1696,7 +1992,7 @@ footer {
                     </div>
                   </div>
                   <div class="mock-contact-row">
-                    <div class="mock-contact-avatar">MT</div>
+                    <div class="mock-contact-avatar"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=MarcTremblay&backgroundColor=c0aede" alt="MT"></div>
                     <div class="mock-contact-info">
                       <div class="mock-contact-name">Marc Tremblay</div>
                       <div class="mock-contact-role">Research Director</div>
@@ -1704,12 +2000,15 @@ footer {
                     </div>
                   </div>
                   <div class="mock-contact-row">
-                    <div class="mock-contact-avatar">CD</div>
+                    <div class="mock-contact-avatar"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=ClaireDubois&backgroundColor=ffd5dc" alt="CD"></div>
                     <div class="mock-contact-info">
                       <div class="mock-contact-name">Claire Dubois</div>
                       <div class="mock-contact-role">VP Client Service</div>
                       <div class="mock-contact-email">c.dubois@ipsos.com</div>
                     </div>
+                  </div>
+                  <div class="mock-see-more">
+                    <span class="mock-see-more-text">See 238 others →</span>
                   </div>
                   <div class="mock-reveal-btn">Reveal emails</div>
                 </div>
@@ -1854,7 +2153,7 @@ footer {
     <div class="step-card">
       <div class="step-number">1</div>
       <h3>Tell us who you are</h3>
-      <p>Enter your company — we instantly match it against our database of 1,200+ Market Research companies and show your AI-generated specialization profile.</p>
+      <p>Enter your company — we analyze your website, LinkedIn, and media presence to build your MR profile and identify your specializations automatically.</p>
       <div class="step-visual">
         <div class="mini-tag">Brand & Communication</div>
         <div class="mini-tag">CX & Satisfaction</div>
@@ -1868,19 +2167,20 @@ footer {
       <h3>Get matched prospects</h3>
       <p>Our engine calculates relevance scores across 17 specialization dimensions. You get a ranked list of your best-fit clients or partners — scored High, Medium or Low.</p>
       <div class="step-visual" style="display: flex; flex-direction: column; gap: 6px;">
-        <div class="mini-score high">● High match — Ipsos, GfK, Kantar</div>
-        <div class="mini-score med">● Medium — Toluna, Harris</div>
+        <div class="mini-score high">● High match — L'Oréal, Danone, Unilever</div>
+        <div class="mini-score med">● Medium — Nestlé, P&G, Colgate</div>
       </div>
     </div>
     <div class="step-card">
       <div class="step-number">3</div>
       <h3>Build your pipeline</h3>
-      <p>Add prospects to your Salesboard, track status, reveal the emails of the right decision-makers, and act on real-time signals — like companies actively hiring MR talent.</p>
-      <div class="step-visual" style="display: flex; gap: 8px; flex-wrap: wrap;">
-        <span style="padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; background: var(--green-light); color: #006B3F;">To contact</span>
-        <span style="padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; background: #FEF3C7; color: #92400E;">Contacted</span>
-        <span style="padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; background: var(--blue-light); color: var(--blue-primary);">Reveal email</span>
-        <span style="padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; background: var(--blue-light); color: var(--blue-primary);">Export CSV</span>
+      <p>Add prospects to your Dashboard, track status, reveal the emails of the right decision-makers, and act on real-time signals — like revenue growth, leadership changes, or MR hiring activity.</p>
+      <div class="step-visual" style="display: flex; gap: 6px; flex-wrap: wrap;">
+        <span style="padding: 3px 8px; border-radius: 5px; font-size: 10px; font-weight: 600; background: var(--green-light); color: #006B3F;">To contact</span>
+        <span style="padding: 3px 8px; border-radius: 5px; font-size: 10px; font-weight: 600; background: #FEF3C7; color: #92400E;">Contacted</span>
+        <span style="padding: 3px 8px; border-radius: 5px; font-size: 10px; font-weight: 600; background: var(--blue-light); color: var(--blue-primary);">Reveal email</span>
+        <span style="padding: 3px 8px; border-radius: 5px; font-size: 10px; font-weight: 600; background: #FEE2E2; color: #991B1B;">📈 Revenue growth</span>
+        <span style="padding: 3px 8px; border-radius: 5px; font-size: 10px; font-weight: 600; background: #FFF7ED; color: #9A3412;">🔍 Hiring MR</span>
       </div>
     </div>
   </div>
@@ -1890,7 +2190,7 @@ footer {
 <section class="features-section" id="features">
   <div class="section-header">
     <div class="section-pill">Features</div>
-    <h2>Everything you need to prospect smarter</h2>
+    <h2>Everything you need to find the right match</h2>
     <p>Purpose-built for the Market Research industry. Not another generic sales tool.</p>
   </div>
 
@@ -1910,8 +2210,8 @@ footer {
     <div class="feature-row">
       <div class="feature-card">
         <div class="feature-icon orange"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="8" y1="9" x2="16" y2="9"/><line x1="8" y1="13" x2="14" y2="13"/><line x1="8" y1="17" x2="12" y2="17"/></svg></div>
-        <h3>Salesboard</h3>
-        <p>Manage your pipeline with status tracking, notes, and prioritized prospect lists. Create multiple searches by pool — find clients, find partners, find suppliers. Export up to 20 contacts per batch.</p>
+        <h3>Dashboard</h3>
+        <p>Manage your pipeline with status tracking, notes, and prioritized lists. Search by similarity — find companies that match the profile of your best clients or providers. Create multiple pools and export up to 20 contacts per batch.</p>
       </div>
       <div class="feature-card">
         <div class="feature-icon purple"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
@@ -2022,13 +2322,13 @@ footer {
       <div class="uc-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
       <h3>Find clients</h3>
       <p>Identify companies that buy studies, panels, or tech solutions — with their budgets, decision-makers, and the best time to reach out.</p>
-      <div class="uc-for">For MR Agencies, Data Collection, Tech Tools</div>
+      <div class="uc-for">For MR Agencies, Consulting Firms, Data Collection, Tech Tools</div>
     </div>
     <div class="usecase-card">
       <div class="uc-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div>
       <h3>Find partners</h3>
       <p>Spot complementary players for strategic partnerships — agencies with different specializations, or data companies covering your blind spots.</p>
-      <div class="uc-for">For MR Agencies, Consulting firms</div>
+      <div class="uc-for">For MR Agencies, Consulting Firms, End Clients</div>
     </div>
     <div class="usecase-card">
       <div class="uc-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
@@ -2295,6 +2595,12 @@ document.getElementById('navCtaBtn').addEventListener('click', function(e) {
   scaleMockup();
   window.addEventListener('resize', scaleMockup);
 })();
+</script>
+<script>
+const stepObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); stepObs.unobserve(e.target); } });
+}, { threshold: 0.2 });
+document.querySelectorAll('.step-card').forEach(c => stepObs.observe(c));
 </script>
 
 </body>
