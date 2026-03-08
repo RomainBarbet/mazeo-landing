@@ -5,6 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>mazeo — Find your next Market Research clients</title>
 <meta name="description" content="The intelligent market map for Market Research professionals. 1,200+ companies profiled, AI-powered matching, real-time signals.">
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mazeo.co/">
+<meta property="og:title" content="mazeo — Find your next Market Research clients, partners & suppliers">
+<meta property="og:description" content="The intelligent market map for Market Research. 1,200+ companies profiled, AI-powered matching, real-time signals, and the decision-makers you need to reach.">
+<meta property="og:image" content="https://mazeo.co/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="mazeo">
+<meta property="og:locale" content="en_US">
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="mazeo — Find your next Market Research clients">
+<meta name="twitter:description" content="The intelligent market map for Market Research. 1,200+ companies, AI matching, real-time signals.">
+<meta name="twitter:image" content="https://mazeo.co/og-image.png">
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png">
@@ -116,6 +131,86 @@ nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.06); }
 }
 .btn-outline:hover { border-color: var(--blue-primary); color: var(--blue-primary); }
 .nav-cta { display: flex; align-items: center; gap: 12px; }
+/* Hamburger button — hidden on desktop */
+.nav-hamburger {
+  display: none;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 6px;
+  position: relative;
+  z-index: 201;
+}
+.nav-hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--gray-900);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  margin: 5px auto;
+}
+.nav-hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+/* Mobile drawer */
+.nav-mobile {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 200;
+  background: rgba(255,255,255,0.98);
+  backdrop-filter: blur(20px);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.nav-mobile.open {
+  display: flex;
+  opacity: 1;
+  pointer-events: auto;
+}
+.nav-mobile-close {
+  position: absolute;
+  top: 16px; right: 16px;
+  width: 36px; height: 36px;
+  border: none; background: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+.nav-mobile-close svg {
+  width: 22px; height: 22px;
+  stroke: var(--gray-700);
+  stroke-width: 2.5;
+}
+.nav-mobile a.mobile-link {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--gray-700);
+  text-decoration: none;
+  padding: 8px 0;
+  transition: color 0.2s;
+}
+.nav-mobile a.mobile-link:hover { color: var(--blue-primary); }
+.nav-mobile .mobile-cta {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 16px;
+  width: 240px;
+}
+.nav-mobile .mobile-cta .btn-primary,
+.nav-mobile .mobile-cta .btn-outline {
+  width: 100%;
+  justify-content: center;
+  padding: 12px 20px;
+  font-size: 14px;
+}
 
 /* ===== HERO ===== */
 .hero {
@@ -326,7 +421,6 @@ nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.06); }
 .app-mockup {
   width: 100%; height: 100%;
   display: flex; flex-direction: column;
-  position: relative;
 }
 /* App header bar */
 .mock-header {
@@ -1555,9 +1649,8 @@ footer {
 @media (max-width: 768px) {
   /* ---- NAV ---- */
   .nav-links { display: none; }
-  .nav-cta { gap: 6px; }
-  .nav-cta .btn-outline { padding: 6px 12px; font-size: 12px; }
-  .nav-cta .btn-primary { padding: 6px 14px; font-size: 12px; }
+  .nav-cta { display: none; }
+  .nav-hamburger { display: block; }
   .nav-inner { padding: 0 12px; height: 56px; }
 
   /* ---- HERO TITLE ---- */
@@ -1658,8 +1751,26 @@ footer {
       <a href="javascript:void(0)" class="btn-outline" onclick="alert('Mazeo is currently in private beta. Request early access below to get your login.')">Log in</a>
       <a href="javascript:void(0)" class="btn-primary" id="navCtaBtn">Request early access</a>
     </div>
+    <button class="nav-hamburger" id="hamburgerBtn" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
+<!-- Mobile navigation drawer -->
+<div class="nav-mobile" id="mobileNav">
+  <button class="nav-mobile-close" id="mobileCloseBtn" aria-label="Close menu">
+    <svg viewBox="0 0 24 24" fill="none"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+  </button>
+  <a href="#how" class="mobile-link">How it works</a>
+  <a href="#features" class="mobile-link">Features</a>
+  <a href="#signals" class="mobile-link">Signals</a>
+  <a href="#usecases" class="mobile-link">Use cases</a>
+  <a href="#story" class="mobile-link">Our story</a>
+  <div class="mobile-cta">
+    <a href="javascript:void(0)" class="btn-outline" onclick="alert('Mazeo is currently in private beta. Request early access below to get your login.')">Log in</a>
+    <a href="javascript:void(0)" class="btn-primary" onclick="document.getElementById('hamburgerBtn').click(); setTimeout(function(){document.getElementById('navCtaBtn').click();},350);">Request early access</a>
+  </div>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -1691,10 +1802,10 @@ footer {
           <div class="url-bar">app.mazeo.co</div>
         </div>
         <div class="screenshot-content">
+          <!-- Animated cursor -->
+          <div class="mock-cursor"><svg viewBox="0 0 24 24" fill="#00EF8B" stroke="white" stroke-width="1.5"><path d="M5 3l14 8-6.5 1.5L11 19z"/></svg></div>
+          <div class="mock-click-ripple"></div>
           <div class="app-mockup">
-            <!-- Animated cursor (inside mockup so it scales with it on mobile) -->
-            <div class="mock-cursor"><svg viewBox="0 0 24 24" fill="#00EF8B" stroke="white" stroke-width="1.5"><path d="M5 3l14 8-6.5 1.5L11 19z"/></svg></div>
-            <div class="mock-click-ripple"></div>
             <!-- App header -->
             <div class="mock-header">
               <div class="logo-text">mazeo<span>.</span></div>
@@ -1880,21 +1991,17 @@ footer {
                   </div>
                 </div>
                 <span class="mock-badge high">High match · 87%</span>
-                <!-- Tabs: Info / Contacts -->
                 <div class="mock-panel-tabs">
                   <div class="mock-panel-tab tab-info">Info</div>
                   <div class="mock-panel-tab tab-contacts">Contacts</div>
                 </div>
-                <!-- Info tab content: overview → sub-tabs cycle -->
                 <div class="mock-tab-info">
-                  <!-- Sub-tabs row (appears immediately with panel) -->
                   <div class="mock-subtabs">
                     <div class="mock-subtab st-general">General</div>
                     <div class="mock-subtab st-strength">Strength</div>
                     <div class="mock-subtab st-financial">Financial Health</div>
                     <div class="mock-subtab st-recruitment">MR Recruitment</div>
                   </div>
-                  <!-- Info Overview (company details) -->
                   <div class="mock-info-overview">
                     <div class="mock-info-desc">Leader mondial des études de marché — mesure de marque, expérience client, opinion, media/audience, panels à grande échelle.</div>
                     <div class="mock-info-grid">
@@ -1912,105 +2019,44 @@ footer {
                       <span class="mock-tag">Paris</span>
                     </div>
                   </div>
-                  <!-- Sub-page: MR Strength (specializations) -->
                   <div class="mock-page-spec">
-                    <div class="mock-spec-row">
-                      <div class="mock-spec-label">Brand Tracking</div>
-                      <div class="mock-spec-bar"><div class="mock-spec-bar-fill bar-85"></div></div>
-                      <div class="mock-spec-pct">85%</div>
-                    </div>
-                    <div class="mock-spec-row">
-                      <div class="mock-spec-label">CX & Satisfaction</div>
-                      <div class="mock-spec-bar"><div class="mock-spec-bar-fill bar-72"></div></div>
-                      <div class="mock-spec-pct">72%</div>
-                    </div>
-                    <div class="mock-spec-row">
-                      <div class="mock-spec-label">Opinion & Social</div>
-                      <div class="mock-spec-bar"><div class="mock-spec-bar-fill bar-68"></div></div>
-                      <div class="mock-spec-pct">68%</div>
-                    </div>
-                    <div class="mock-spec-row">
-                      <div class="mock-spec-label">Media & Audience</div>
-                      <div class="mock-spec-bar"><div class="mock-spec-bar-fill bar-90"></div></div>
-                      <div class="mock-spec-pct">90%</div>
-                    </div>
+                    <div class="mock-spec-row"><div class="mock-spec-label">Brand Tracking</div><div class="mock-spec-bar"><div class="mock-spec-bar-fill bar-85"></div></div><div class="mock-spec-pct">85%</div></div>
+                    <div class="mock-spec-row"><div class="mock-spec-label">CX & Satisfaction</div><div class="mock-spec-bar"><div class="mock-spec-bar-fill bar-72"></div></div><div class="mock-spec-pct">72%</div></div>
+                    <div class="mock-spec-row"><div class="mock-spec-label">Opinion & Social</div><div class="mock-spec-bar"><div class="mock-spec-bar-fill bar-68"></div></div><div class="mock-spec-pct">68%</div></div>
+                    <div class="mock-spec-row"><div class="mock-spec-label">Media & Audience</div><div class="mock-spec-bar"><div class="mock-spec-bar-fill bar-90"></div></div><div class="mock-spec-pct">90%</div></div>
                   </div>
-                  <!-- Sub-page: Financial Health -->
                   <div class="mock-page-financial">
-                    <div class="mock-health-badge">
-                      <span class="mock-health-icon">✅</span>
-                      <div><div class="mock-health-text">Healthy</div><div class="mock-health-sub">Growing &amp; profitable</div></div>
+                    <div class="mock-health-badge"><span class="mock-health-icon">✅</span><div><div class="mock-health-text">Healthy</div><div class="mock-health-sub">Growing &amp; profitable</div></div></div>
+                    <div class="mock-metric-row">
+                      <div class="mock-metric-item"><div class="mock-metric-label">Revenue</div><div class="mock-metric-value">€2.4B <span class="mock-metric-trend up">+12%</span></div></div>
+                      <div class="mock-metric-item"><div class="mock-metric-label">EBITDA</div><div class="mock-metric-value">15.2% <span class="mock-metric-trend up">+2.1pt</span></div></div>
                     </div>
                     <div class="mock-metric-row">
-                      <div class="mock-metric-item">
-                        <div class="mock-metric-label">Revenue</div>
-                        <div class="mock-metric-value">€2.4B <span class="mock-metric-trend up">+12%</span></div>
-                      </div>
-                      <div class="mock-metric-item">
-                        <div class="mock-metric-label">EBITDA</div>
-                        <div class="mock-metric-value">15.2% <span class="mock-metric-trend up">+2.1pt</span></div>
-                      </div>
-                    </div>
-                    <div class="mock-metric-row">
-                      <div class="mock-metric-item">
-                        <div class="mock-metric-label">Headcount</div>
-                        <div class="mock-metric-value">18 400 <span class="mock-metric-trend up">+8%</span></div>
-                      </div>
-                      <div class="mock-metric-item">
-                        <div class="mock-metric-label">Score</div>
-                        <div class="mock-metric-value">A+ <span style="font-size:8px;color:#059669;">Strong</span></div>
-                      </div>
+                      <div class="mock-metric-item"><div class="mock-metric-label">Headcount</div><div class="mock-metric-value">18 400 <span class="mock-metric-trend up">+8%</span></div></div>
+                      <div class="mock-metric-item"><div class="mock-metric-label">Score</div><div class="mock-metric-value">A+ <span style="font-size:8px;color:#059669;">Strong</span></div></div>
                     </div>
                   </div>
-                  <!-- Sub-page: MR Recruitment -->
                   <div class="mock-page-signals">
-                    <div class="mock-signal-badge">
-                      <span class="signal-dot"></span>
-                      Actively hiring — 3 MR roles open
-                    </div>
-                    <div class="mock-job-item">
-                      <div class="mock-job-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
-                      <div><div class="mock-job-title">Head of Qual Research</div><div class="mock-job-date">Posted 3d ago</div></div>
-                    </div>
-                    <div class="mock-job-item">
-                      <div class="mock-job-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
-                      <div><div class="mock-job-title">CX Project Manager</div><div class="mock-job-date">Posted 5d ago</div></div>
-                    </div>
-                    <div class="mock-job-item">
-                      <div class="mock-job-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
-                      <div><div class="mock-job-title">Data Analyst – Panels</div><div class="mock-job-date">Posted 1w ago</div></div>
-                    </div>
+                    <div class="mock-signal-badge"><span class="signal-dot"></span> Actively hiring — 3 MR roles open</div>
+                    <div class="mock-job-item"><div class="mock-job-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div><div class="mock-job-title">Head of Qual Research</div><div class="mock-job-date">Posted 3d ago</div></div></div>
+                    <div class="mock-job-item"><div class="mock-job-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div><div class="mock-job-title">CX Project Manager</div><div class="mock-job-date">Posted 5d ago</div></div></div>
+                    <div class="mock-job-item"><div class="mock-job-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div><div class="mock-job-title">Data Analyst – Panels</div><div class="mock-job-date">Posted 1w ago</div></div></div>
                   </div>
                 </div>
-                <!-- Contacts tab content -->
                 <div class="mock-tab-contacts">
                   <div class="mock-contact-row">
                     <div class="mock-contact-avatar"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=SophieLaurent&backgroundColor=b6e3f4" alt="SL"></div>
-                    <div class="mock-contact-info">
-                      <div class="mock-contact-name">Sophie Laurent</div>
-                      <div class="mock-contact-role">Head of Research</div>
-                      <div class="mock-contact-email">s.laurent@ipsos.com</div>
-                    </div>
+                    <div class="mock-contact-info"><div class="mock-contact-name">Sophie Laurent</div><div class="mock-contact-role">Head of Research</div><div class="mock-contact-email">s.laurent@ipsos.com</div></div>
                   </div>
                   <div class="mock-contact-row">
                     <div class="mock-contact-avatar"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=MarcTremblay&backgroundColor=c0aede" alt="MT"></div>
-                    <div class="mock-contact-info">
-                      <div class="mock-contact-name">Marc Tremblay</div>
-                      <div class="mock-contact-role">Research Director</div>
-                      <div class="mock-contact-email">m.tremblay@ipsos.com</div>
-                    </div>
+                    <div class="mock-contact-info"><div class="mock-contact-name">Marc Tremblay</div><div class="mock-contact-role">Research Director</div><div class="mock-contact-email">m.tremblay@ipsos.com</div></div>
                   </div>
                   <div class="mock-contact-row">
                     <div class="mock-contact-avatar"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=ClaireDubois&backgroundColor=ffd5dc" alt="CD"></div>
-                    <div class="mock-contact-info">
-                      <div class="mock-contact-name">Claire Dubois</div>
-                      <div class="mock-contact-role">VP Client Service</div>
-                      <div class="mock-contact-email">c.dubois@ipsos.com</div>
-                    </div>
+                    <div class="mock-contact-info"><div class="mock-contact-name">Claire Dubois</div><div class="mock-contact-role">VP Client Service</div><div class="mock-contact-email">c.dubois@ipsos.com</div></div>
                   </div>
-                  <div class="mock-see-more">
-                    <span class="mock-see-more-text">See 238 others →</span>
-                  </div>
+                  <div class="mock-see-more"><span class="mock-see-more-text">See 238 others →</span></div>
                   <div class="mock-reveal-btn">Reveal emails</div>
                 </div>
               </div>
@@ -2030,43 +2076,43 @@ footer {
   <div class="marquee-container">
     <div class="marquee-track" id="marquee-clients">
       <!-- Row 1: End Clients — duplicated for seamless loop -->
-      <div class="logo-item"><img src="https://img.logo.dev/loreal.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="L'Oréal"><span>L'Oréal</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/orange.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Orange"><span>Orange</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/se.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Schneider Electric"><span>Schneider Electric</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/renaultgroup.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Renault"><span>Renault</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/engie.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="ENGIE"><span>ENGIE</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/airbus.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Airbus"><span>Airbus</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/thalesgroup.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Thales"><span>Thales</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/stellantis.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Stellantis"><span>Stellantis</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/chanel.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="CHANEL"><span>CHANEL</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/danone.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Danone"><span>Danone</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/sncf-voyageurs.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="SNCF"><span>SNCF</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/bpifrance.fr?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Bpifrance"><span>Bpifrance</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/carrefour.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Carrefour"><span>Carrefour</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/ubisoft.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Ubisoft"><span>Ubisoft</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/lvmh.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="LVMH"><span>LVMH</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/bnpparibas.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="BNP Paribas"><span>BNP Paribas</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/totalenergies.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="TotalEnergies"><span>TotalEnergies</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/lapostegroupe.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="La Poste"><span>La Poste</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/loreal.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="L'Oréal"><span>L'Oréal</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/orange.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Orange"><span>Orange</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/se.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Schneider Electric"><span>Schneider Electric</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/renaultgroup.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Renault"><span>Renault</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/engie.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="ENGIE"><span>ENGIE</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/airbus.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Airbus"><span>Airbus</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/thalesgroup.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Thales"><span>Thales</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/stellantis.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Stellantis"><span>Stellantis</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/chanel.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="CHANEL"><span>CHANEL</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/danone.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Danone"><span>Danone</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/sncf-voyageurs.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="SNCF"><span>SNCF</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/bpifrance.fr?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Bpifrance"><span>Bpifrance</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/carrefour.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Carrefour"><span>Carrefour</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/ubisoft.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Ubisoft"><span>Ubisoft</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/lvmh.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="LVMH"><span>LVMH</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/bnpparibas.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="BNP Paribas"><span>BNP Paribas</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/totalenergies.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="TotalEnergies"><span>TotalEnergies</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/lapostegroupe.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="La Poste"><span>La Poste</span></div>
       <!-- Duplicate for seamless loop -->
-      <div class="logo-item"><img src="https://img.logo.dev/loreal.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="L'Oréal"><span>L'Oréal</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/orange.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Orange"><span>Orange</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/se.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Schneider Electric"><span>Schneider Electric</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/renaultgroup.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Renault"><span>Renault</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/engie.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="ENGIE"><span>ENGIE</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/airbus.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Airbus"><span>Airbus</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/thalesgroup.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Thales"><span>Thales</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/stellantis.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Stellantis"><span>Stellantis</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/chanel.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="CHANEL"><span>CHANEL</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/danone.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Danone"><span>Danone</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/sncf-voyageurs.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="SNCF"><span>SNCF</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/bpifrance.fr?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Bpifrance"><span>Bpifrance</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/carrefour.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Carrefour"><span>Carrefour</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/ubisoft.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Ubisoft"><span>Ubisoft</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/lvmh.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="LVMH"><span>LVMH</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/bnpparibas.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="BNP Paribas"><span>BNP Paribas</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/totalenergies.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="TotalEnergies"><span>TotalEnergies</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/lapostegroupe.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="La Poste"><span>La Poste</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/loreal.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="L'Oréal"><span>L'Oréal</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/orange.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Orange"><span>Orange</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/se.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Schneider Electric"><span>Schneider Electric</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/renaultgroup.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Renault"><span>Renault</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/engie.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="ENGIE"><span>ENGIE</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/airbus.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Airbus"><span>Airbus</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/thalesgroup.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Thales"><span>Thales</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/stellantis.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Stellantis"><span>Stellantis</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/chanel.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="CHANEL"><span>CHANEL</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/danone.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Danone"><span>Danone</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/sncf-voyageurs.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="SNCF"><span>SNCF</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/bpifrance.fr?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Bpifrance"><span>Bpifrance</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/carrefour.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Carrefour"><span>Carrefour</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/ubisoft.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Ubisoft"><span>Ubisoft</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/lvmh.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="LVMH"><span>LVMH</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/bnpparibas.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="BNP Paribas"><span>BNP Paribas</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/totalenergies.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="TotalEnergies"><span>TotalEnergies</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/lapostegroupe.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="La Poste"><span>La Poste</span></div>
     </div>
   </div>
 
@@ -2074,39 +2120,39 @@ footer {
   <div class="marquee-container">
     <div class="marquee-track reverse" id="marquee-agencies">
       <!-- Row 2: MR Agencies — duplicated for seamless loop -->
-      <div class="logo-item"><img src="https://img.logo.dev/ipsos.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Ipsos"><span>Ipsos</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/nielseniq.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="GfK / NielsenIQ"><span>GfK / NielsenIQ</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/kantar.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Kantar"><span>Kantar</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/iqvia.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="IQVIA"><span>IQVIA</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/ifop.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Ifop"><span>Ifop</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/mediametrie.fr?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Médiamétrie"><span>Médiamétrie</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/circana.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Circana"><span>Circana</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/opinion-way.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="OpinionWay"><span>OpinionWay</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/csa.eu?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="CSA"><span>CSA</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/enov.fr?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Enov"><span>Enov</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/eurofins.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Eurofins"><span>Eurofins</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/qualimetrie.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Qualimétrie"><span>Qualimétrie</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/toluna.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Toluna"><span>Toluna</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/dynata.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Dynata"><span>Dynata</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/qualtrics.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Qualtrics"><span>Qualtrics</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/norstatgroup.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Norstat"><span>Norstat</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/ipsos.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Ipsos"><span>Ipsos</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/nielseniq.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="GfK / NielsenIQ"><span>GfK / NielsenIQ</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/kantar.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Kantar"><span>Kantar</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/iqvia.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="IQVIA"><span>IQVIA</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/ifop.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Ifop"><span>Ifop</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/mediametrie.fr?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Médiamétrie"><span>Médiamétrie</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/circana.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Circana"><span>Circana</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/opinion-way.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="OpinionWay"><span>OpinionWay</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/csa.eu?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="CSA"><span>CSA</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/enov.fr?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Enov"><span>Enov</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/eurofins.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Eurofins"><span>Eurofins</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/qualimetrie.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Qualimétrie"><span>Qualimétrie</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/toluna.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Toluna"><span>Toluna</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/dynata.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Dynata"><span>Dynata</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/qualtrics.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Qualtrics"><span>Qualtrics</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/norstatgroup.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Norstat"><span>Norstat</span></div>
       <!-- Duplicate for seamless loop -->
-      <div class="logo-item"><img src="https://img.logo.dev/ipsos.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Ipsos"><span>Ipsos</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/nielseniq.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="GfK / NielsenIQ"><span>GfK / NielsenIQ</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/kantar.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Kantar"><span>Kantar</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/iqvia.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="IQVIA"><span>IQVIA</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/ifop.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Ifop"><span>Ifop</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/mediametrie.fr?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Médiamétrie"><span>Médiamétrie</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/circana.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Circana"><span>Circana</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/opinion-way.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="OpinionWay"><span>OpinionWay</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/csa.eu?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="CSA"><span>CSA</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/enov.fr?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Enov"><span>Enov</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/eurofins.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Eurofins"><span>Eurofins</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/qualimetrie.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Qualimétrie"><span>Qualimétrie</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/toluna.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Toluna"><span>Toluna</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/dynata.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Dynata"><span>Dynata</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/qualtrics.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Qualtrics"><span>Qualtrics</span></div>
-      <div class="logo-item"><img src="https://img.logo.dev/norstatgroup.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Norstat"><span>Norstat</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/ipsos.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Ipsos"><span>Ipsos</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/nielseniq.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="GfK / NielsenIQ"><span>GfK / NielsenIQ</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/kantar.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Kantar"><span>Kantar</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/iqvia.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="IQVIA"><span>IQVIA</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/ifop.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Ifop"><span>Ifop</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/mediametrie.fr?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Médiamétrie"><span>Médiamétrie</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/circana.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Circana"><span>Circana</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/opinion-way.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="OpinionWay"><span>OpinionWay</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/csa.eu?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="CSA"><span>CSA</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/enov.fr?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Enov"><span>Enov</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/eurofins.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Eurofins"><span>Eurofins</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/qualimetrie.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Qualimétrie"><span>Qualimétrie</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/toluna.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Toluna"><span>Toluna</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/dynata.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Dynata"><span>Dynata</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/qualtrics.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Qualtrics"><span>Qualtrics</span></div>
+      <div class="logo-item"><img loading="lazy" src="https://img.logo.dev/norstatgroup.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Norstat"><span>Norstat</span></div>
     </div>
   </div>
 </section>
@@ -2348,7 +2394,7 @@ footer {
       "I spent 5 years at the heart of market research in Europe. A multi-billion dollar industry built on knowledge — yet unable to map itself. Buyers rely on word of mouth, suppliers prospect blind. No one has a clear picture of who does what. <strong>Mazeo is the tool the entire industry needs but never had: every company profiled, every specialization identified, every right contact revealed.</strong>"
     </p>
     <div class="founder-info">
-      <div class="founder-avatar"><img src="Profile picture Linkedin.png" alt="Romain Barbet"></div>
+      <div class="founder-avatar"><img loading="lazy" src="Profile picture Linkedin.png" alt="Romain Barbet"></div>
       <div style="text-align: left;">
         <div class="founder-name">Romain Barbet</div>
         <div class="founder-title">Founder, mazeo</div>
@@ -2389,6 +2435,29 @@ const nav = document.getElementById('navbar');
 window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 20);
 });
+
+// Hamburger menu
+(function() {
+  var btn = document.getElementById('hamburgerBtn');
+  var drawer = document.getElementById('mobileNav');
+  var closeBtn = document.getElementById('mobileCloseBtn');
+  if (!btn || !drawer) return;
+  function closeDrawer() {
+    btn.classList.remove('open');
+    drawer.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  btn.addEventListener('click', function() {
+    btn.classList.toggle('open');
+    drawer.classList.toggle('open');
+    document.body.style.overflow = drawer.classList.contains('open') ? 'hidden' : '';
+  });
+  if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+  // Close drawer on link click
+  drawer.querySelectorAll('.mobile-link').forEach(function(link) {
+    link.addEventListener('click', closeDrawer);
+  });
+})();
 
 // Smooth scroll for nav links
 document.querySelectorAll('a[href^="#"]').forEach(a => {
