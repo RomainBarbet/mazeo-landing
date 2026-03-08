@@ -132,6 +132,41 @@ nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.06); }
 }
 .btn-outline:hover { border-color: var(--blue-primary); color: var(--blue-primary); }
 .nav-cta { display: flex; align-items: center; gap: 12px; }
+/* Login tooltip */
+.login-tooltip {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: var(--gray-100);
+  color: var(--gray-500);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--gray-200);
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.3s, transform 0.3s;
+  pointer-events: none;
+  z-index: 300;
+}
+.login-tooltip.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.login-tooltip::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  right: 20px;
+  width: 8px;
+  height: 8px;
+  background: var(--gray-100);
+  border-left: 1px solid var(--gray-200);
+  border-top: 1px solid var(--gray-200);
+  transform: rotate(45deg);
+}
 /* Hamburger button — hidden on desktop */
 .nav-hamburger {
   display: none;
@@ -1768,8 +1803,9 @@ footer {
       <a href="#usecases">Use cases</a>
       <a href="#story">Our story</a>
     </div>
-    <div class="nav-cta">
-      <a href="javascript:void(0)" class="btn-outline" onclick="alert('Mazeo is currently in private beta. Request early access below to get your login.')">Log in</a>
+    <div class="nav-cta" style="position:relative;">
+      <a href="javascript:void(0)" class="btn-outline" id="navLoginBtn">Log in</a>
+      <div class="login-tooltip" id="navLoginTooltip">Mazeo is in private beta — request early access below.</div>
       <a href="javascript:void(0)" class="btn-primary" id="navCtaBtn">Request early access</a>
     </div>
     <button class="nav-hamburger" id="hamburgerBtn" aria-label="Open menu">
@@ -1787,8 +1823,9 @@ footer {
   <a href="#signals" class="mobile-link">Signals</a>
   <a href="#usecases" class="mobile-link">Use cases</a>
   <a href="#story" class="mobile-link">Our story</a>
-  <div class="mobile-cta">
-    <a href="javascript:void(0)" class="btn-outline" onclick="alert('Mazeo is currently in private beta. Request early access below to get your login.')">Log in</a>
+  <div class="mobile-cta" style="position:relative;">
+    <a href="javascript:void(0)" class="btn-outline" id="mobileLoginBtn">Log in</a>
+    <div class="login-tooltip" id="mobileLoginTooltip" style="top:auto;bottom:calc(100% + 8px);right:auto;left:50%;transform:translateX(-50%) translateY(4px);">Mazeo is in private beta — request early access below.</div>
     <a href="javascript:void(0)" class="btn-primary" onclick="document.getElementById('hamburgerBtn').click(); setTimeout(function(){document.getElementById('navCtaBtn').click();},350);">Request early access</a>
   </div>
 </div>
@@ -2445,6 +2482,8 @@ footer {
     <div class="footer-links">
       <a href="mailto:romain.barbet@mazeo.co">Contact</a>
       <a href="https://www.linkedin.com/company/mazeo-tech/" target="_blank">LinkedIn</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms</a>
     </div>
     <div class="footer-copy">© 2026 mazeo. All rights reserved.</div>
   </div>
@@ -2456,6 +2495,32 @@ const nav = document.getElementById('navbar');
 window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 20);
 });
+
+// Login tooltip
+(function() {
+  function setupLoginTooltip(btnId, tooltipId) {
+    var btn = document.getElementById(btnId);
+    var tooltip = document.getElementById(tooltipId);
+    if (!btn || !tooltip) return;
+    var timer;
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      tooltip.classList.add('visible');
+      if (tooltipId === 'mobileLoginTooltip') {
+        tooltip.style.transform = 'translateX(-50%) translateY(0)';
+      }
+      clearTimeout(timer);
+      timer = setTimeout(function() {
+        tooltip.classList.remove('visible');
+        if (tooltipId === 'mobileLoginTooltip') {
+          tooltip.style.transform = 'translateX(-50%) translateY(4px)';
+        }
+      }, 3000);
+    });
+  }
+  setupLoginTooltip('navLoginBtn', 'navLoginTooltip');
+  setupLoginTooltip('mobileLoginBtn', 'mobileLoginTooltip');
+})();
 
 // Hamburger menu
 (function() {
