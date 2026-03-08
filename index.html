@@ -326,6 +326,7 @@ nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.06); }
 .app-mockup {
   width: 100%; height: 100%;
   display: flex; flex-direction: column;
+  position: relative;
 }
 /* App header bar */
 .mock-header {
@@ -1690,10 +1691,10 @@ footer {
           <div class="url-bar">app.mazeo.co</div>
         </div>
         <div class="screenshot-content">
-          <!-- Animated cursor -->
-          <div class="mock-cursor"><svg viewBox="0 0 24 24" fill="#00EF8B" stroke="white" stroke-width="1.5"><path d="M5 3l14 8-6.5 1.5L11 19z"/></svg></div>
-          <div class="mock-click-ripple"></div>
           <div class="app-mockup">
+            <!-- Animated cursor (inside mockup so it scales with it on mobile) -->
+            <div class="mock-cursor"><svg viewBox="0 0 24 24" fill="#00EF8B" stroke="white" stroke-width="1.5"><path d="M5 3l14 8-6.5 1.5L11 19z"/></svg></div>
+            <div class="mock-click-ripple"></div>
             <!-- App header -->
             <div class="mock-header">
               <div class="logo-text">mazeo<span>.</span></div>
