@@ -502,6 +502,7 @@ nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.06); }
   animation: cardAppear 0.4s ease-out forwards;
 }
 .mock-card img { width: 75%; height: 75%; object-fit: contain; border-radius: 3px; }
+.mock-card.selected img { width: 150%; height: 150%; }
 .mock-card-more {
   width: 36px; height: 36px; border-radius: 6px;
   background: var(--gray-50); border: 1px dashed var(--gray-300);
@@ -516,13 +517,11 @@ nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.06); }
 }
 @keyframes cardAppear { to { opacity: 1; transform: scale(1); } }
 @keyframes cardSelect {
-  0%,5.5% { box-shadow: none; border-color: var(--gray-200); background: var(--white); }
-  7% { box-shadow: 0 0 0 2px rgba(0,123,255,0.3); border-color: var(--blue-primary); background: var(--blue-light); }
+  0%,7% { box-shadow: none; border-color: var(--gray-200); background: var(--white); }
+  9% { box-shadow: 0 0 0 2px rgba(0,123,255,0.3); border-color: var(--blue-primary); background: var(--blue-light); }
   80% { box-shadow: 0 0 0 2px rgba(0,123,255,0.15); border-color: var(--blue-primary); background: var(--blue-light); }
-  85% { box-shadow: none; border-color: var(--gray-200); background: var(--white); }
-  91% { box-shadow: none; border-color: var(--gray-200); background: var(--white); }
-  93% { box-shadow: 0 0 0 2px rgba(0,123,255,0.3); border-color: var(--blue-primary); background: var(--blue-light); }
-  100% { box-shadow: 0 0 0 2px rgba(0,123,255,0.3); border-color: var(--blue-primary); background: var(--blue-light); }
+  84% { box-shadow: none; border-color: var(--gray-200); background: var(--white); }
+  100% { box-shadow: none; border-color: var(--gray-200); background: var(--white); }
 }
 /* Staggered card appearance */
 .mock-card:nth-child(n) { animation-delay: calc((var(--n, 0)) * 0.02s); }
@@ -544,19 +543,17 @@ nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.06); }
   display: flex; flex-direction: column; gap: 6px; overflow-y: auto;
   text-align: left;
 }
-/* Timeline 35s: 0-12% cards, 13.5% click Ipsos, 15.5-25% General, 26-34% Strength, 36-44% Financial, 46-54% Recruitment, 57-84% Contacts, 85-90% out */
+/* Timeline 36s: 0-6% cursor enters, 7-8% click P&G, 8-80% browse tabs, 80-84% exit, 84-100% pause */
 @keyframes panelSlide {
-  0%,5.5% { transform: translateX(100%); opacity: 0; }
-  7% { transform: translateX(0); opacity: 1; }
+  0%,7% { transform: translateX(100%); opacity: 0; }
+  9% { transform: translateX(0); opacity: 1; }
   80% { transform: translateX(0); opacity: 1; }
-  85% { transform: translateX(100%); opacity: 0; }
-  91% { transform: translateX(100%); opacity: 0; }
-  93% { transform: translateX(0); opacity: 1; }
-  100% { transform: translateX(0); opacity: 1; }
+  84% { transform: translateX(100%); opacity: 0; }
+  100% { transform: translateX(100%); opacity: 0; }
 }
 .mock-panel-header { display: flex; align-items: flex-start; gap: 8px; }
 .mock-panel-avatar {
-  width: 36px; height: 36px; border-radius: 8px;
+  width: 52px; height: 52px; border-radius: 10px;
   background: var(--white); border: 1px solid var(--gray-200);
   display: flex; align-items: center; justify-content: center;
   overflow: hidden; flex-shrink: 0;
@@ -580,10 +577,10 @@ nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.06); }
   animation: infoOverview 36s ease infinite;
 }
 @keyframes infoOverview {
-  0%,6.5% { opacity: 0; max-height: 0; }
-  8% { opacity: 1; max-height: 300px; }
-  20.5% { opacity: 1; max-height: 300px; }
-  21.5% { opacity: 0; max-height: 0; }
+  0%,8% { opacity: 0; max-height: 0; }
+  10% { opacity: 1; max-height: 300px; }
+  22% { opacity: 1; max-height: 300px; }
+  23% { opacity: 0; max-height: 0; }
   100% { opacity: 0; max-height: 0; }
 }
 .mock-info-desc {
@@ -623,10 +620,10 @@ nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.06); }
   animation: subtabsVis 36s ease infinite;
 }
 @keyframes subtabsVis {
-  0%,5.5% { opacity: 0; max-height: 0; }
-  7% { opacity: 1; max-height: 30px; }
-  53% { opacity: 1; max-height: 30px; }
-  55% { opacity: 0; max-height: 0; }
+  0%,8% { opacity: 0; max-height: 0; }
+  10% { opacity: 1; max-height: 30px; }
+  55% { opacity: 1; max-height: 30px; }
+  57% { opacity: 0; max-height: 0; }
   100% { opacity: 0; max-height: 0; }
 }
 .mock-subtab {
@@ -638,34 +635,34 @@ nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.06); }
 /* General sub-tab — active first when panel opens */
 .mock-subtab.st-general { animation: stGeneral 36s ease infinite; }
 @keyframes stGeneral {
-  0%,5.5% { color: var(--gray-400); border-bottom-color: transparent; }
-  7% { color: var(--blue-primary); border-bottom-color: var(--blue-primary); }
-  20% { color: var(--blue-primary); border-bottom-color: var(--blue-primary); }
-  21% { color: var(--gray-400); border-bottom-color: transparent; }
+  0%,8% { color: var(--gray-400); border-bottom-color: transparent; }
+  10% { color: var(--blue-primary); border-bottom-color: var(--blue-primary); }
+  22% { color: var(--blue-primary); border-bottom-color: var(--blue-primary); }
+  23% { color: var(--gray-400); border-bottom-color: transparent; }
   100% { color: var(--gray-400); border-bottom-color: transparent; }
 }
 .mock-subtab.st-strength { animation: stStrength 36s ease infinite; }
 @keyframes stStrength {
-  0%,20.5% { color: var(--gray-400); border-bottom-color: transparent; }
-  21% { color: var(--blue-primary); border-bottom-color: var(--blue-primary); }
-  31.5% { color: var(--blue-primary); border-bottom-color: var(--blue-primary); }
-  32% { color: var(--gray-400); border-bottom-color: transparent; }
+  0%,22.5% { color: var(--gray-400); border-bottom-color: transparent; }
+  23% { color: var(--blue-primary); border-bottom-color: var(--blue-primary); }
+  33.5% { color: var(--blue-primary); border-bottom-color: var(--blue-primary); }
+  34% { color: var(--gray-400); border-bottom-color: transparent; }
   100% { color: var(--gray-400); border-bottom-color: transparent; }
 }
 .mock-subtab.st-financial { animation: stFinancial 36s ease infinite; }
 @keyframes stFinancial {
-  0%,31.5% { color: var(--gray-400); border-bottom-color: transparent; }
-  32% { color: var(--blue-primary); border-bottom-color: var(--blue-primary); }
-  42.5% { color: var(--blue-primary); border-bottom-color: var(--blue-primary); }
-  43% { color: var(--gray-400); border-bottom-color: transparent; }
+  0%,33.5% { color: var(--gray-400); border-bottom-color: transparent; }
+  34% { color: var(--blue-primary); border-bottom-color: var(--blue-primary); }
+  44.5% { color: var(--blue-primary); border-bottom-color: var(--blue-primary); }
+  45% { color: var(--gray-400); border-bottom-color: transparent; }
   100% { color: var(--gray-400); border-bottom-color: transparent; }
 }
 .mock-subtab.st-recruitment { animation: stRecruitment 36s ease infinite; }
 @keyframes stRecruitment {
-  0%,42.5% { color: var(--gray-400); border-bottom-color: transparent; }
-  43% { color: var(--blue-primary); border-bottom-color: var(--blue-primary); }
-  52% { color: var(--blue-primary); border-bottom-color: var(--blue-primary); }
-  53% { color: var(--gray-400); border-bottom-color: transparent; }
+  0%,44.5% { color: var(--gray-400); border-bottom-color: transparent; }
+  45% { color: var(--blue-primary); border-bottom-color: var(--blue-primary); }
+  54% { color: var(--blue-primary); border-bottom-color: var(--blue-primary); }
+  55% { color: var(--gray-400); border-bottom-color: transparent; }
   100% { color: var(--gray-400); border-bottom-color: transparent; }
 }
 
@@ -676,10 +673,10 @@ nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.06); }
   animation: pageSpec 36s ease infinite;
 }
 @keyframes pageSpec {
-  0%,20.5% { opacity: 0; max-height: 0; }
-  22% { opacity: 1; max-height: 200px; }
-  31.5% { opacity: 1; max-height: 200px; }
-  32% { opacity: 0; max-height: 0; }
+  0%,22.5% { opacity: 0; max-height: 0; }
+  24% { opacity: 1; max-height: 200px; }
+  33.5% { opacity: 1; max-height: 200px; }
+  34% { opacity: 0; max-height: 0; }
   100% { opacity: 0; max-height: 0; }
 }
 .mock-spec-row { display: flex; align-items: center; gap: 6px; }
@@ -694,10 +691,10 @@ nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.06); }
 .mock-spec-bar-fill.bar-68 { --target: 68%; animation-delay: 0.3s; }
 .mock-spec-bar-fill.bar-90 { --target: 90%; animation-delay: 0.08s; }
 @keyframes barGrow {
-  0%,21.5% { width: 0; }
-  24% { width: var(--target); }
-  31.5% { width: var(--target); }
-  32% { width: 0; }
+  0%,23.5% { width: 0; }
+  26% { width: var(--target); }
+  33.5% { width: var(--target); }
+  34% { width: 0; }
   100% { width: 0; }
 }
 .mock-spec-pct { font-size: 8px; font-weight: 700; color: var(--gray-700); width: 24px; }
@@ -709,10 +706,10 @@ nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.06); }
   animation: pageFin 36s ease infinite;
 }
 @keyframes pageFin {
-  0%,31.5% { opacity: 0; max-height: 0; }
-  33% { opacity: 1; max-height: 200px; }
-  42% { opacity: 1; max-height: 200px; }
-  43% { opacity: 0; max-height: 0; }
+  0%,33.5% { opacity: 0; max-height: 0; }
+  35% { opacity: 1; max-height: 200px; }
+  44% { opacity: 1; max-height: 200px; }
+  45% { opacity: 0; max-height: 0; }
   100% { opacity: 0; max-height: 0; }
 }
 .mock-health-badge {
@@ -740,10 +737,10 @@ nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.06); }
   animation: pageSig 36s ease infinite;
 }
 @keyframes pageSig {
-  0%,42.5% { opacity: 0; max-height: 0; }
-  44% { opacity: 1; max-height: 200px; }
-  52% { opacity: 1; max-height: 200px; }
-  54% { opacity: 0; max-height: 0; }
+  0%,44.5% { opacity: 0; max-height: 0; }
+  46% { opacity: 1; max-height: 200px; }
+  54% { opacity: 1; max-height: 200px; }
+  56% { opacity: 0; max-height: 0; }
   100% { opacity: 0; max-height: 0; }
 }
 .mock-signal-badge {
@@ -779,19 +776,19 @@ nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.06); }
 /* Info tab content — visible for General + sub-tabs cycle */
 .mock-tab-info { display: flex; flex-direction: column; gap: 0; overflow: hidden; animation: tabInfoVis 36s ease infinite; }
 @keyframes tabInfoVis {
-  0%,6.5% { opacity: 0; max-height: 0; }
-  8% { opacity: 1; max-height: 500px; }
-  53% { opacity: 1; max-height: 500px; }
-  55% { opacity: 0; max-height: 0; }
+  0%,8% { opacity: 0; max-height: 0; }
+  10% { opacity: 1; max-height: 500px; }
+  55% { opacity: 1; max-height: 500px; }
+  57% { opacity: 0; max-height: 0; }
   100% { opacity: 0; max-height: 0; }
 }
 /* Contacts tab content */
 .mock-tab-contacts { display: flex; flex-direction: column; gap: 6px; opacity: 0; max-height: 0; overflow: hidden; animation: tabContactsVis 36s ease infinite; }
 @keyframes tabContactsVis {
-  0%,55% { opacity: 0; max-height: 0; }
-  56.5% { opacity: 1; max-height: 300px; }
-  79% { opacity: 1; max-height: 300px; }
-  84% { opacity: 0; max-height: 0; }
+  0%,56% { opacity: 0; max-height: 0; }
+  58% { opacity: 1; max-height: 300px; }
+  78% { opacity: 1; max-height: 300px; }
+  82% { opacity: 0; max-height: 0; }
   100% { opacity: 0; max-height: 0; }
 }
 .mock-contact-row {
@@ -833,10 +830,10 @@ nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.06); }
   letter-spacing: 0.2px;
 }
 @keyframes emailReveal {
-  0%,66.5% { opacity: 0; max-height: 0; }
-  68% { opacity: 1; max-height: 20px; }
-  79% { opacity: 1; max-height: 20px; }
-  84% { opacity: 0; max-height: 0; }
+  0%,68.5% { opacity: 0; max-height: 0; }
+  70% { opacity: 1; max-height: 20px; }
+  78% { opacity: 1; max-height: 20px; }
+  82% { opacity: 0; max-height: 0; }
   100% { opacity: 0; max-height: 0; }
 }
 .mock-reveal-btn {
@@ -845,33 +842,33 @@ nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.06); }
   cursor: default; opacity: 0; animation: revealBtnAnim 36s ease infinite;
 }
 @keyframes revealBtnAnim {
-  0%,56% { opacity: 0; transform: scale(0.9); }
-  57.5% { opacity: 1; transform: scale(1); }
-  65% { opacity: 1; transform: scale(1); }
-  66% { opacity: 0.6; transform: scale(0.95); }
-  68% { opacity: 1; transform: scale(1); }
-  79% { opacity: 1; }
-  84% { opacity: 0; }
+  0%,57% { opacity: 0; transform: scale(0.9); }
+  59% { opacity: 1; transform: scale(1); }
+  67% { opacity: 1; transform: scale(1); }
+  68% { opacity: 0.6; transform: scale(0.95); }
+  70% { opacity: 1; transform: scale(1); }
+  78% { opacity: 1; }
+  82% { opacity: 0; }
   100% { opacity: 0; }
 }
 /* Tab switching animation for the tab labels */
 .mock-panel-tab.tab-info { animation: tabInfoActive 36s ease infinite; }
 @keyframes tabInfoActive {
-  0%,14% { color: var(--gray-400); border-bottom-color: transparent; }
-  15.5% { color: var(--blue-primary); border-bottom-color: var(--blue-primary); }
+  0%,8% { color: var(--gray-400); border-bottom-color: transparent; }
+  10% { color: var(--blue-primary); border-bottom-color: var(--blue-primary); }
   55% { color: var(--blue-primary); border-bottom-color: var(--blue-primary); }
   57% { color: var(--gray-400); border-bottom-color: transparent; }
   100% { color: var(--gray-400); border-bottom-color: transparent; }
 }
 .mock-panel-tab.tab-contacts { animation: tabContactsActive 36s ease infinite; }
 @keyframes tabContactsActive {
-  0%,57% { color: var(--gray-400); border-bottom-color: transparent; }
+  0%,56% { color: var(--gray-400); border-bottom-color: transparent; }
   58% { color: var(--blue-primary); border-bottom-color: var(--blue-primary); }
-  84% { color: var(--blue-primary); border-bottom-color: var(--blue-primary); }
-  89% { color: var(--gray-400); border-bottom-color: transparent; }
+  80% { color: var(--blue-primary); border-bottom-color: var(--blue-primary); }
+  82% { color: var(--gray-400); border-bottom-color: transparent; }
   100% { color: var(--gray-400); border-bottom-color: transparent; }
 }
-/* Cursor — 36s timeline: Ipsos→General→Strength→Financial→Recruitment→Contacts→Reveal */
+/* Cursor — 36s timeline: P&G→General→Strength→Financial→Recruitment→Contacts→Reveal */
 .mock-cursor {
   position: absolute; width: 28px; height: 28px; z-index: 10;
   opacity: 0; pointer-events: none;
@@ -880,51 +877,47 @@ nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.06); }
 }
 .mock-cursor svg { width: 28px; height: 28px; }
 @keyframes cursorAnim {
-  0% { opacity: 0; top: 40%; left: 30%; }
-  1.5% { opacity: 1; top: 40%; left: 30%; }
-  5% { opacity: 1; top: 18%; left: 51%; }
-  /* Click on Ipsos */
-  6% { opacity: 1; top: 18%; left: 51%; transform: scale(0.8); }
-  7% { opacity: 1; top: 18%; left: 51%; transform: scale(1); }
+  /* Cursor enters from bottom-left of mockup */
+  0% { opacity: 0; top: 85%; left: 10%; }
+  2% { opacity: 1; top: 85%; left: 10%; }
+  6% { opacity: 1; top: 40%; left: 26%; }
+  /* Click on P&G */
+  7% { opacity: 1; top: 40%; left: 26%; transform: scale(0.8); }
+  8% { opacity: 1; top: 40%; left: 26%; transform: scale(1); }
   /* Move into panel, browse General info */
-  11% { opacity: 1; top: 40%; left: 75%; }
-  18% { opacity: 1; top: 40%; left: 75%; }
-  20% { opacity: 1; top: 29%; left: 76%; }
+  12% { opacity: 1; top: 40%; left: 75%; }
+  20% { opacity: 1; top: 40%; left: 75%; }
+  22% { opacity: 1; top: 29%; left: 76%; }
   /* Click Strength */
-  21% { opacity: 1; top: 29%; left: 76%; transform: scale(0.8); }
-  22% { opacity: 1; top: 29%; left: 76%; transform: scale(1); }
-  30% { opacity: 1; top: 29%; left: 76%; }
-  31.5% { opacity: 1; top: 29%; left: 82%; }
+  23% { opacity: 1; top: 29%; left: 76%; transform: scale(0.8); }
+  24% { opacity: 1; top: 29%; left: 76%; transform: scale(1); }
+  32% { opacity: 1; top: 29%; left: 76%; }
+  33.5% { opacity: 1; top: 29%; left: 82%; }
   /* Click Financial Health */
-  32% { opacity: 1; top: 29%; left: 82%; transform: scale(0.8); }
-  33% { opacity: 1; top: 29%; left: 82%; transform: scale(1); }
-  41% { opacity: 1; top: 29%; left: 82%; }
-  42.5% { opacity: 1; top: 29%; left: 92%; }
+  34% { opacity: 1; top: 29%; left: 82%; transform: scale(0.8); }
+  35% { opacity: 1; top: 29%; left: 82%; transform: scale(1); }
+  43% { opacity: 1; top: 29%; left: 82%; }
+  44.5% { opacity: 1; top: 29%; left: 92%; }
   /* Click MR Recruitment */
-  43% { opacity: 1; top: 29%; left: 92%; transform: scale(0.8); }
-  44% { opacity: 1; top: 29%; left: 92%; transform: scale(1); }
-  52% { opacity: 1; top: 29%; left: 92%; }
-  54% { opacity: 1; top: 23%; left: 89%; }
+  45% { opacity: 1; top: 29%; left: 92%; transform: scale(0.8); }
+  46% { opacity: 1; top: 29%; left: 92%; transform: scale(1); }
+  54% { opacity: 1; top: 29%; left: 92%; }
+  56% { opacity: 1; top: 23%; left: 89%; }
   /* Click on Contacts tab */
-  55% { opacity: 1; top: 23%; left: 89%; transform: scale(0.8); }
-  56% { opacity: 1; top: 23%; left: 89%; transform: scale(1); }
-  62% { opacity: 1; top: 23%; left: 89%; }
+  57% { opacity: 1; top: 23%; left: 89%; transform: scale(0.8); }
+  58% { opacity: 1; top: 23%; left: 89%; transform: scale(1); }
+  64% { opacity: 1; top: 23%; left: 89%; }
   /* Move to Reveal emails button */
-  64% { opacity: 1; top: 67%; left: 72%; }
   66% { opacity: 1; top: 67%; left: 72%; }
+  68% { opacity: 1; top: 67%; left: 72%; }
   /* Click on Reveal */
-  66.5% { opacity: 1; top: 67%; left: 72%; transform: scale(0.8); }
-  67.5% { opacity: 1; top: 67%; left: 72%; transform: scale(1); }
-  76% { opacity: 1; top: 67%; left: 72%; }
-  79% { opacity: 0; top: 67%; left: 72%; }
-  86% { opacity: 0; top: 40%; left: 30%; }
-  87% { opacity: 1; top: 40%; left: 30%; }
-  91% { opacity: 1; top: 18%; left: 51%; }
-  /* 2nd cycle: Click on Ipsos */
-  92% { opacity: 1; top: 18%; left: 51%; transform: scale(0.8); }
-  93% { opacity: 1; top: 18%; left: 51%; transform: scale(1); }
-  97% { opacity: 1; top: 40%; left: 75%; }
-  100% { opacity: 1; top: 40%; left: 75%; }
+  68.5% { opacity: 1; top: 67%; left: 72%; transform: scale(0.8); }
+  69.5% { opacity: 1; top: 67%; left: 72%; transform: scale(1); }
+  78% { opacity: 1; top: 67%; left: 72%; }
+  /* Cursor exits toward bottom */
+  82% { opacity: 1; top: 85%; left: 10%; }
+  84% { opacity: 0; top: 85%; left: 10%; }
+  100% { opacity: 0; top: 85%; left: 10%; }
 }
 .mock-click-ripple {
   position: absolute; width: 20px; height: 20px; border-radius: 50%;
@@ -932,34 +925,30 @@ nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.06); }
   animation: rippleAnim 36s ease-out infinite;
 }
 @keyframes rippleAnim {
-  /* Ripple on Ipsos logo */
-  0%,5.5% { top: 18%; left: 51%; opacity: 0; transform: scale(0); }
-  6% { top: 18%; left: 51%; opacity: 0.7; transform: scale(1); }
-  8% { top: 18%; left: 51%; opacity: 0; transform: scale(3.5); }
+  /* Ripple on P&G logo */
+  0%,6.5% { top: 40%; left: 26%; opacity: 0; transform: scale(0); }
+  7% { top: 40%; left: 26%; opacity: 0.7; transform: scale(1); }
+  9% { top: 40%; left: 26%; opacity: 0; transform: scale(3.5); }
   /* Ripple on Strength sub-tab */
-  20.5% { top: 29%; left: 76%; opacity: 0; transform: scale(0); }
-  21% { top: 29%; left: 76%; opacity: 0.6; transform: scale(1); }
-  23% { top: 29%; left: 76%; opacity: 0; transform: scale(3); }
+  22.5% { top: 29%; left: 76%; opacity: 0; transform: scale(0); }
+  23% { top: 29%; left: 76%; opacity: 0.6; transform: scale(1); }
+  25% { top: 29%; left: 76%; opacity: 0; transform: scale(3); }
   /* Ripple on Financial Health sub-tab */
-  31.5% { top: 29%; left: 82%; opacity: 0; transform: scale(0); }
-  32% { top: 29%; left: 82%; opacity: 0.6; transform: scale(1); }
-  34% { top: 29%; left: 82%; opacity: 0; transform: scale(3); }
+  33.5% { top: 29%; left: 82%; opacity: 0; transform: scale(0); }
+  34% { top: 29%; left: 82%; opacity: 0.6; transform: scale(1); }
+  36% { top: 29%; left: 82%; opacity: 0; transform: scale(3); }
   /* Ripple on MR Recruitment sub-tab */
-  42.5% { top: 29%; left: 92%; opacity: 0; transform: scale(0); }
-  43% { top: 29%; left: 92%; opacity: 0.6; transform: scale(1); }
-  45% { top: 29%; left: 92%; opacity: 0; transform: scale(3); }
+  44.5% { top: 29%; left: 92%; opacity: 0; transform: scale(0); }
+  45% { top: 29%; left: 92%; opacity: 0.6; transform: scale(1); }
+  47% { top: 29%; left: 92%; opacity: 0; transform: scale(3); }
   /* Ripple on Contacts tab */
-  54.5% { top: 23%; left: 89%; opacity: 0; transform: scale(0); }
-  55% { top: 23%; left: 89%; opacity: 0.7; transform: scale(1); }
-  57% { top: 23%; left: 89%; opacity: 0; transform: scale(3.5); }
+  56.5% { top: 23%; left: 89%; opacity: 0; transform: scale(0); }
+  57% { top: 23%; left: 89%; opacity: 0.7; transform: scale(1); }
+  59% { top: 23%; left: 89%; opacity: 0; transform: scale(3.5); }
   /* Ripple on Reveal button */
-  66% { top: 67%; left: 72%; opacity: 0; transform: scale(0); }
-  66.5% { top: 67%; left: 72%; opacity: 0.7; transform: scale(1); }
-  68.5% { top: 67%; left: 72%; opacity: 0; transform: scale(3.5); }
-  /* 2nd cycle ripple on Ipsos */
-  91.5% { top: 18%; left: 51%; opacity: 0; transform: scale(0); }
-  92% { top: 18%; left: 51%; opacity: 0.7; transform: scale(1); }
-  94% { top: 18%; left: 51%; opacity: 0; transform: scale(3.5); }
+  68% { top: 67%; left: 72%; opacity: 0; transform: scale(0); }
+  68.5% { top: 67%; left: 72%; opacity: 0.7; transform: scale(1); }
+  70.5% { top: 67%; left: 72%; opacity: 0; transform: scale(3.5); }
   100% { opacity: 0; }
 }
 
@@ -1921,7 +1910,7 @@ footer {
                     <div class="mock-card"><img src="https://img.logo.dev/veolia.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Veolia"></div>
                     <div class="mock-card"><img src="https://img.logo.dev/kering.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Kering"></div>
                     <div class="mock-card"><img src="https://img.logo.dev/unilever.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Unilever"></div>
-                    <div class="mock-card"><img src="https://img.logo.dev/pg.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="P&G"></div>
+                    <div class="mock-card selected"><img src="https://img.logo.dev/pg.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="P&G"></div>
                     <div class="mock-card"><img src="https://img.logo.dev/colgatepalmolive.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Colgate"></div>
                     <div class="mock-card"><img src="https://img.logo.dev/jnj.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="J&J"></div>
                     <div class="mock-card"><img src="https://img.logo.dev/mars.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Mars"></div>
@@ -1937,7 +1926,7 @@ footer {
                 <div class="mock-quad q-agencies">
                   <div class="mock-quad-title">MR Agencies · 341</div>
                   <div class="mock-cards">
-                    <div class="mock-card selected"><img src="https://img.logo.dev/ipsos.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Ipsos"></div>
+                    <div class="mock-card"><img src="https://img.logo.dev/ipsos.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Ipsos"></div>
                     <div class="mock-card"><img src="https://img.logo.dev/kantar.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Kantar"></div>
                     <div class="mock-card"><img src="https://img.logo.dev/nielsen.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Nielsen"></div>
                     <div class="mock-card"><img src="https://img.logo.dev/bva-group.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="BVA"></div>
@@ -2042,13 +2031,13 @@ footer {
               <!-- Right detail panel -->
               <div class="mock-panel">
                 <div class="mock-panel-header">
-                  <div class="mock-panel-avatar"><img src="https://img.logo.dev/ipsos.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Ipsos BVA" style="width:100%;height:100%;object-fit:contain;"></div>
+                  <div class="mock-panel-avatar"><img src="https://img.logo.dev/pg.com?token=pk_dlUkKFWUSDmKZbwaAq3BkQ&size=64" alt="Procter & Gamble" style="width:100%;height:100%;object-fit:contain;"></div>
                   <div>
-                    <div class="mock-panel-name">Ipsos BVA</div>
-                    <div class="mock-panel-cat">Market Research Agency</div>
+                    <div class="mock-panel-name">Procter & Gamble</div>
+                    <div class="mock-panel-cat">End Client · FMCG</div>
                   </div>
                 </div>
-                <span class="mock-badge high">High match · 87%</span>
+                <span class="mock-badge high">High match · 92%</span>
                 <div class="mock-panel-tabs">
                   <div class="mock-panel-tab tab-info">Info</div>
                   <div class="mock-panel-tab tab-contacts">Contacts</div>
@@ -2061,60 +2050,60 @@ footer {
                     <div class="mock-subtab st-recruitment">MR Recruitment</div>
                   </div>
                   <div class="mock-info-overview">
-                    <div class="mock-info-desc">Leader mondial des études de marché — mesure de marque, expérience client, opinion, media/audience, panels à grande échelle.</div>
+                    <div class="mock-info-desc">Global FMCG leader — Beauty, Grooming, Health Care, Fabric & Home Care, Baby & Family Care. Major buyer of consumer insights & market research.</div>
                     <div class="mock-info-grid">
-                      <div><div class="mock-info-field-label">Headquarters</div><div class="mock-info-field-value">Paris, FR</div></div>
+                      <div><div class="mock-info-field-label">Headquarters</div><div class="mock-info-field-value">Cincinnati, US</div></div>
                       <div><div class="mock-info-field-label">Size</div><div class="mock-info-field-value">Grand Groupe</div></div>
-                      <div><div class="mock-info-field-label">Employees</div><div class="mock-info-field-value">1 162</div></div>
-                      <div><div class="mock-info-field-label">Founded</div><div class="mock-info-field-value">1975</div></div>
-                      <div><div class="mock-info-field-label">Contacts</div><div class="mock-info-field-value">405</div></div>
-                      <div><div class="mock-info-field-label">Country</div><div class="mock-info-field-value">FR, GP, RE</div></div>
+                      <div><div class="mock-info-field-label">Employees</div><div class="mock-info-field-value">109 000</div></div>
+                      <div><div class="mock-info-field-label">Founded</div><div class="mock-info-field-value">1837</div></div>
+                      <div><div class="mock-info-field-label">Contacts</div><div class="mock-info-field-value">1 247</div></div>
+                      <div><div class="mock-info-field-label">Presence</div><div class="mock-info-field-value">70 countries</div></div>
                     </div>
-                    <div class="mock-hiring-badge"><span class="signal-dot"></span> Actively hiring 3 MR roles</div>
+                    <div class="mock-hiring-badge"><span class="signal-dot"></span> Actively hiring 5 Insights roles</div>
                     <div class="mock-tag-row">
-                      <span class="mock-tag">405 contacts</span>
+                      <span class="mock-tag">1 247 contacts</span>
                       <span class="mock-tag">Grand Groupe</span>
-                      <span class="mock-tag">Paris</span>
+                      <span class="mock-tag">FMCG</span>
                     </div>
                   </div>
                   <div class="mock-page-spec">
-                    <div class="mock-spec-row"><div class="mock-spec-label">Brand Tracking</div><div class="mock-spec-bar"><div class="mock-spec-bar-fill bar-85"></div></div><div class="mock-spec-pct">85%</div></div>
-                    <div class="mock-spec-row"><div class="mock-spec-label">CX & Satisfaction</div><div class="mock-spec-bar"><div class="mock-spec-bar-fill bar-72"></div></div><div class="mock-spec-pct">72%</div></div>
-                    <div class="mock-spec-row"><div class="mock-spec-label">Opinion & Social</div><div class="mock-spec-bar"><div class="mock-spec-bar-fill bar-68"></div></div><div class="mock-spec-pct">68%</div></div>
-                    <div class="mock-spec-row"><div class="mock-spec-label">Media & Audience</div><div class="mock-spec-bar"><div class="mock-spec-bar-fill bar-90"></div></div><div class="mock-spec-pct">90%</div></div>
+                    <div class="mock-spec-row"><div class="mock-spec-label">Consumer Segmentation</div><div class="mock-spec-bar"><div class="mock-spec-bar-fill bar-90"></div></div><div class="mock-spec-pct">3/3</div></div>
+                    <div class="mock-spec-row"><div class="mock-spec-label">Brand Communications</div><div class="mock-spec-bar"><div class="mock-spec-bar-fill bar-90"></div></div><div class="mock-spec-pct">3/3</div></div>
+                    <div class="mock-spec-row"><div class="mock-spec-label">Innovation & Product Test</div><div class="mock-spec-bar"><div class="mock-spec-bar-fill bar-90"></div></div><div class="mock-spec-pct">3/3</div></div>
+                    <div class="mock-spec-row"><div class="mock-spec-label">Shopper & Retail</div><div class="mock-spec-bar"><div class="mock-spec-bar-fill bar-85"></div></div><div class="mock-spec-pct">3/3</div></div>
                   </div>
                   <div class="mock-page-financial">
                     <div class="mock-health-badge"><span class="mock-health-icon">✅</span><div><div class="mock-health-text">Healthy</div><div class="mock-health-sub">Growing &amp; profitable</div></div></div>
                     <div class="mock-metric-row">
-                      <div class="mock-metric-item"><div class="mock-metric-label">Revenue</div><div class="mock-metric-value">€2.4B <span class="mock-metric-trend up">+12%</span></div></div>
-                      <div class="mock-metric-item"><div class="mock-metric-label">EBITDA</div><div class="mock-metric-value">15.2% <span class="mock-metric-trend up">+2.1pt</span></div></div>
+                      <div class="mock-metric-item"><div class="mock-metric-label">Revenue</div><div class="mock-metric-value">$84.3B <span class="mock-metric-trend up">+2%</span></div></div>
+                      <div class="mock-metric-item"><div class="mock-metric-label">Op. Margin</div><div class="mock-metric-value">23.9% <span class="mock-metric-trend up">+0.8pt</span></div></div>
                     </div>
                     <div class="mock-metric-row">
-                      <div class="mock-metric-item"><div class="mock-metric-label">Headcount</div><div class="mock-metric-value">18 400 <span class="mock-metric-trend up">+8%</span></div></div>
+                      <div class="mock-metric-item"><div class="mock-metric-label">Headcount</div><div class="mock-metric-value">107 000 <span class="mock-metric-trend neutral">~</span></div></div>
                       <div class="mock-metric-item"><div class="mock-metric-label">Score</div><div class="mock-metric-value">A+ <span style="font-size:8px;color:#059669;">Strong</span></div></div>
                     </div>
                   </div>
                   <div class="mock-page-signals">
-                    <div class="mock-signal-badge"><span class="signal-dot"></span> Actively hiring — 3 MR roles open</div>
-                    <div class="mock-job-item"><div class="mock-job-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div><div class="mock-job-title">Head of Qual Research</div><div class="mock-job-date">Posted 3d ago</div></div></div>
-                    <div class="mock-job-item"><div class="mock-job-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div><div class="mock-job-title">CX Project Manager</div><div class="mock-job-date">Posted 5d ago</div></div></div>
-                    <div class="mock-job-item"><div class="mock-job-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div><div class="mock-job-title">Data Analyst – Panels</div><div class="mock-job-date">Posted 1w ago</div></div></div>
+                    <div class="mock-signal-badge"><span class="signal-dot"></span> Actively hiring — 5 Insights roles open</div>
+                    <div class="mock-job-item"><div class="mock-job-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div><div class="mock-job-title">Consumer Insights Manager</div><div class="mock-job-date">Posted 2d ago</div></div></div>
+                    <div class="mock-job-item"><div class="mock-job-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div><div class="mock-job-title">Brand Research Lead</div><div class="mock-job-date">Posted 4d ago</div></div></div>
+                    <div class="mock-job-item"><div class="mock-job-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div><div class="mock-job-title">Data Analytics – Shopper</div><div class="mock-job-date">Posted 1w ago</div></div></div>
                   </div>
                 </div>
                 <div class="mock-tab-contacts">
                   <div class="mock-contact-row">
-                    <div class="mock-contact-avatar"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=SophieLaurent&backgroundColor=b6e3f4" alt="SL"></div>
-                    <div class="mock-contact-info"><div class="mock-contact-name">Sophie Laurent</div><div class="mock-contact-role">Head of Research</div><div class="mock-contact-email">s.laurent@ipsos.com</div></div>
+                    <div class="mock-contact-avatar"><img src="https://api.dicebear.com/9.x/personas/svg?seed=Claire&backgroundColor=b6e3f4" alt="CM"></div>
+                    <div class="mock-contact-info"><div class="mock-contact-name">Claire Martin</div><div class="mock-contact-role">VP Consumer Insights</div><div class="mock-contact-email">c.martin@pg.com</div></div>
                   </div>
                   <div class="mock-contact-row">
-                    <div class="mock-contact-avatar"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=MarcTremblay&backgroundColor=c0aede" alt="MT"></div>
-                    <div class="mock-contact-info"><div class="mock-contact-name">Marc Tremblay</div><div class="mock-contact-role">Research Director</div><div class="mock-contact-email">m.tremblay@ipsos.com</div></div>
+                    <div class="mock-contact-avatar"><img src="https://api.dicebear.com/9.x/personas/svg?seed=Thomas&backgroundColor=c0aede" alt="TD"></div>
+                    <div class="mock-contact-info"><div class="mock-contact-name">Thomas Durand</div><div class="mock-contact-role">Director Market Research</div><div class="mock-contact-email">t.durand@pg.com</div></div>
                   </div>
                   <div class="mock-contact-row">
-                    <div class="mock-contact-avatar"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=ClaireDubois&backgroundColor=ffd5dc" alt="CD"></div>
-                    <div class="mock-contact-info"><div class="mock-contact-name">Claire Dubois</div><div class="mock-contact-role">VP Client Service</div><div class="mock-contact-email">c.dubois@ipsos.com</div></div>
+                    <div class="mock-contact-avatar"><img src="https://api.dicebear.com/9.x/personas/svg?seed=Sophie&backgroundColor=ffd5dc" alt="SL"></div>
+                    <div class="mock-contact-info"><div class="mock-contact-name">Sophie Leroux</div><div class="mock-contact-role">Head of Analytics EMEA</div><div class="mock-contact-email">s.leroux@pg.com</div></div>
                   </div>
-                  <div class="mock-see-more"><span class="mock-see-more-text">See 238 others →</span></div>
+                  <div class="mock-see-more"><span class="mock-see-more-text">See 412 others →</span></div>
                   <div class="mock-reveal-btn">Reveal emails</div>
                 </div>
               </div>
@@ -2332,7 +2321,7 @@ footer {
         <div class="ai-prompts">
           <div class="ai-prompt"><span class="prompt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span> "Show me MR agencies specialized in Healthcare with 50+ employees"</div>
           <div class="ai-prompt"><span class="prompt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span> "Which end clients are growing their insights team?"</div>
-          <div class="ai-prompt"><span class="prompt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span> "Compare Ipsos and Kantar on Brand &amp; Communication expertise"</div>
+          <div class="ai-prompt"><span class="prompt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span> "Show me P&amp;G's top research partners and their specializations"</div>
         </div>
       </div>
     </div>
